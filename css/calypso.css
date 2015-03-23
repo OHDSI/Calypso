@@ -1,0 +1,88 @@
+*:focus {
+    outline: none !important;
+}
+
+body {
+    margin: 0px;
+    font-family: Arial;
+}
+
+div .header {
+  font-size: 14px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+div.inclusionRules {
+    line-height: 16px;
+    font-size: 12px;
+    margin-top: 3px;
+    padding: 2px 5px 2px 5px;
+    vertical-align: top;
+    cursor: pointer;
+    border: solid 1px #fff;
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+}
+
+.inputField
+{
+	background-color: #eee;
+	border-bottom: solid 1px #ccc;
+	border-left: none;
+	border-top: none;
+	border-right: none;
+	padding: 3px;
+	padding-left: 10px;
+	outline: none;
+}
+
+img.spin {
+    -webkit-animation-name: rotation;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes rotation {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(359deg);
+    }
+}
+
+.tab_contents {
+	padding: 15px 10px 10px 10px;
+	border: 1px solid #c0c0c0;
+	border-top: none;
+	min-height: 600px
+}
+
+button.deleteInclusionRule
+{
+	vertical-align: top;
+	margin-top:2px;
+}
+
+.selectedInclusion
+{
+	-webkit-transition: background .5s;
+	background-color: #ccc;
+}
+
+.menu-link {
+    font-size: 16px;
+    color: #818285 !important;
+    text-decoration: none;
+}
+	.menu-link:hover {
+			text-decoration: underline;
+	}
+
+
+

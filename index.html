@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="icon" type="image/ico" href="favicon.ico" />
+	<link rel="stylesheet" href="js/jqueryui/themes/base/jquery-ui.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="css/calypso.boostrap.css" />
+	<link rel="stylesheet" href="css/calypso.css" />
+
+	<script src="js/require.js"></script>
+	<script src="js/main.js"></script>
+</head>
+
+<body>
+	<div data-bind="visible: selectedView() != null" id="wrapper" style="display:none">
+		<table>
+			<tr>
+				<td style="padding: 3px">
+					<img src="images/ohdsi_logo.png" alt="OHDSI">
+				</td>
+				<td style="padding: 3px">
+					<div style="font-family: Arial; font-size: 18px; color: #777; line-height: 18px">CALYPSO</div>
+					<div style="font-family: Arial; font-size: 10px; color: #777; line-height: 10px">Criteria Assessment Logic for Your
+						<br/>Population Studies of Observations</div>
+				</td>
+				<td style="padding-left: 75px;"><a href="#" data-bind="click: cancel" class="menu-link">Feasibility Study List</a></td>
+				<td style="padding-left:75px"><a href="#" class="menu-link">Help</a></td>
+			</tr>
+		</table>
+		<div class="container">
+			<div data-bind="visible: selectedView() == 'list'">
+				<table class="stripe compact hover" cellspacing="0" width="100%" data-bind="dataTable:{
+						onRowClick: selectStudy,
+						data: studyList(),
+						options: {
+							deferRender: true,
+							orderClasses: false,
+							autoWidth: true,
+							order: [ 1, 'asc' ],
+							columns: [
+								{ data: 'id', title: 'Id' },
+								{ data: 'name', title: 'Title' },
+								{ data: 'description', title: 'Description'}
+							],
+							language: {
+								search: 'Filter Studies:'
+							}
+						}
+					 }">
+				</table>
+				<button data-bind="click: newStudy">New Study</button>
+			</div>
+			<div data-bind="visible: selectedView() == 'detail'">
+				<div data-bind="if: selectedStudy()">
+					<table>
+						<tbody>
+							<tr>
+								<td>
+									<textarea maxlength="250" style="font-size: 18px; line-height: 1em; width: 500px; resize: none; overflow: hidden; word-wrap: break-word;" class="inputField" data-bind="textInput: selectedStudy().name, css: { emptyInput: !(selectedStudy().name() && (selectedStudy().name().length > 0)) }, jqAutoresize: {append: ''}"></textarea>
+								</td>
+								<td style="padding-left: 5px;">
+									<button class="button button-small" data-bind="click: save, enable: (dirtyFlag().isDirty() && !isRunning()), css: {'button-flat-primary': !dirtyFlag().isDirty, 'button-flat-caution': dirtyFlag().isDirty}">Save</button>
+									<!-- ko if: selectedStudy().id() != null -->
+									<!-- ko ifnot: isRunning -->
+									<button class="button button-flat-primary button-small" data-bind="click: generate, css: {disable: dirtyFlag().isDirty}, disable: dirtyFlag().isDirty">Generate</button>
+									<!-- /ko -->
+									<!-- ko if: isRunning -->
+									<img class="spin" src="images/running.png" />Generating...
+									<!-- /ko -->
+									<!-- /ko -->
+									<button class="button button-flat-primary button-small" data-bind="click: showSql">Show SQL</button>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="study_description">
+									<div class="header">Description</div>
+									<div width="100%"><textarea maxlength="1000" data-bind="textInput: selectedStudy().description, jqAutoresize: {append: ''}" style="background-color: #eee; border: solid 1px #ccc; resize: none; outline: none; width: 800px;"></textarea></div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="tabs" data-bind="tabs: { widget: tabWidget }">
+						<ul>
+							<li>
+								<a data-bind="attr: { title: 'Index Rule', href: '#indexRule' }, text: 'Index Rule'"></a>
+							</li>
+							<li>
+								<a data-bind="attr: { title: 'Inclusion Rules', href: '#inclusionRules' }, text: 'Inclusion Rules'"></a>
+							</li>
+							<li>
+								<a data-bind="attr: { title: 'Results', href: '#results' }">Results</a>
+							</li>
+						</ul>
+						<div data-bind="attr: { id: 'indexRule' }">
+							<div class="tab_contents">						
+								<!-- ko with: selectedStudy().indexRule -->						
+								<div>
+								<textarea maxlength="250" rows="1"
+													style="font-size: 18px; width: 500px; resize: none; overflow: hidden; word-wrap: break-word;" 
+													class="inputField" data-bind="value: name, jqAutoresize: {append: ''}, css: { emptyInput: !(name() && (name().length > 0)) }"></textarea>
+								</div>
+								<div>
+								Description:<br/>
+								<textarea maxlength="1000" rows="1"
+														style="font-size: 1em; width: 100%; resize: none; overflow: hidden; word-wrap: break-word;" 
+														class="inputField" data-bind="value:description, jqAutoresize: {append: ''}"></textarea>
+								</div>
+								<cohort-expression-editor params="expression: expression, widget: $parent.indexRuleEditorWidget"></cohort-expression-editor>
+								<!-- /ko -->
+							</div>
+						</div>
+						<div data-bind="attr: { id: 'inclusionRules' }">
+							<div class="tab_contents" data-bind="eventListener: [
+																									 { event: 'click', selector: '.deleteInclusionRule', callback: deleteInclusionRule},
+																									 { event: 'click', selector: '.addConceptSet', callback: addConceptSet}]" >								
+								<table style="width: 100%">
+								<colgroup>
+									<col span="1" style="width: 300px;" />
+									<col span="1" />
+								</colgroup>
+								<tbody>
+									<tr>
+										<td style="vertical-align: top; padding-right: 20px;">
+											<div>
+												<span class="header">Inclusion Rules</span> <span class="criteriaAddLink" data-bind="click: addInclusionRule">new</span>
+											</div>
+											<!-- ko foreach: selectedStudy().inclusionRules -->
+											<table style="width: 100%" class="inclusionRules">
+												<colgroup>
+													<col style="width: 25px;" />
+													<col />
+												</colgroup>
+												<tbody>
+													<tr data-bind="click: $root.selectInclusionRule, css: { selectedInclusion: $data == $root.selectedInclusionRule() }">
+														<td style="text-align: right; vertical-align: top;">
+															<span data-bind="text: $index() + 1"></span>.
+														</td>
+														<td style="vertical-align: top;" class="inclusionRules" data-bind="text: ((name() || '').length > 0) ? name() : 'Unnamed Rule' "></td>
+													</tr>
+												</tbody>
+											</table>
+											<!-- /ko -->
+										</td>
+										<td style="vertical-align: top; padding-left: 25px; border-left: 1px #eee solid;">
+											<!-- ko if: selectedInclusionRule() -->
+											<inclusion-rule-editor params="{InclusionRule: selectedInclusionRule(), IndexRule: selectedStudy().indexRule}"></inclusion-rule-editor>
+											<!-- /ko -->
+											<!-- ko ifnot: selectedInclusionRule() -->
+											<div>Please select an inclusion rule to edit.</div>
+											<!-- /ko -->
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							</div>
+						</div>
+						<div data-bind="attr: { id: 'results' }">
+							<div class="tab_contents" style="padding:5px 5px 5px 5px;">		
+								<feasibility-report-viewer params="info: info, report: report"></simulation-report-viewer>
+							</div>
+						</div>
+					</div>
+					
+					<!-- ko if: isGeneratedOpen -->
+					<div title="Generated Sql..." data-bind="dialog: { isOpen: isGeneratedOpen, modal: true, width:700, height:500 }">
+						<div class="tabs" data-bind="tabs: { }">
+							<ul>
+								<li data-bind="attr: { 'aria-controls': 'sql_server' }">
+									<a data-bind="attr: { title: 'MSSQL Server', href: '#sql_server' }, text: 'MSSQL Server'"></a>
+								</li>
+								<li data-bind="attr: { 'aria-controls': 'oracle' }">
+									<a data-bind="attr: { title: 'Oracle', href: '#oracle' }, text: 'Oracle'"></a>
+								</li>
+								<li data-bind="attr: { 'aria-controls': 'postgres' }">
+									<a data-bind="attr: { title: 'Postgres', href: '#postgres' }, text: 'Postgres'"></a>
+								</li>
+								<li data-bind="attr: { 'aria-controls': 'redshift' }">
+									<a data-bind="attr: { title: 'Red Shift', href: '#redshift' }, text: 'Red Shift'"></a>
+								</li>
+							</ul>
+							<div data-bind="attr: { id: 'sql_server' }">
+								<textarea readonly style="width:100%" data-bind="textInput: generatedSql.mssql, jqAutoresize: {append: ''}"></textarea>
+							</div>
+							<div data-bind="attr: { id: 'oracle' }">
+								<textarea readonly style="width:100%" data-bind="textInput: generatedSql.oracle, jqAutoresize: {append: ''}"></textarea>
+							</div>
+							<div data-bind="attr: { id: 'postgres' }">
+								<textarea readonly style="width:100%" data-bind="textInput: generatedSql.postgres, jqAutoresize: {append: ''}"></textarea>
+							</div>
+							<div data-bind="attr: { id: 'redshift' }">
+								<textarea readonly style="width:100%" data-bind="textInput: generatedSql.redshift, jqAutoresize: {append: ''}"></textarea>
+							</div>
+						</div>
+					</div>
+					<!-- /ko -->					
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

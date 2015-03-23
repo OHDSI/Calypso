@@ -1,0 +1,87 @@
+
+<!-- ko ifnot: (info() == null || info().status == "COMPLETE") -->
+<div>Simulation Running...</div>
+<!-- /ko -->
+
+<!-- ko if: report -->
+<div class="tabs" data-bind="tabs: {}">
+	<ul>
+		<li>
+			<a data-bind="attr: { title: 'Simulation Results', href: '#overview' }, text: 'Overview'"></a>
+		</li>
+		<li>
+			<a data-bind="attr: { title: 'Cohort Details', href: '#cohortDetails' }, text: 'Reports'"></a>
+		</li>
+	</ul>
+	<div data-bind="attr: { id: 'overview' }">
+		<div class="tab_contents">
+		<table style="border-collapse: collapse;">
+			<tr>
+				<td style="vertical-align: top; padding-right: 25px;">
+					<div>
+						<table style="border-collapse: collapse;" class="indexSummary" width="100%">
+							<thead>
+								<th style="width: 20px;"></th>
+								<th style="width: 15px;"></th>								
+								<th></th>
+								<th>Match Rate</th>
+								<th>Matching Persons</th>
+								<th>Total Persons</th>
+							</thead>
+							<tbody>
+								<td colspan="2"></td>
+								<td class="header">Summary Statistics:</td>
+								<td data-bind="text:report().summary.percentMatched"></td>
+								<td data-bind="text:report().summary.matchingPersons"></td>
+								<td data-bind="text:report().summary.totalPersons"></td>
+							</tbody>
+						</table>
+					</div>
+					<div class="inclusionRuleType">
+						<table style="border-collapse: collapse;" width="100%">
+							<thead>
+								<th style="width: 20px;"></th>
+								<th style="width: 15px;"></th>
+								<th class="header">Inclusion Rule</th>
+								<th style="width: 100px;text-align: right" class="header">% Satisfied</th>
+								<th style="width: 100px;text-align: right" class="header">% To-Gain</th>
+							</thead>
+							<tbody data-bind="foreach: report().inclusionRuleStats">
+								<tr data-bind="css: {inclusionRulePass: ($parent.pass.indexOf($data) != -1), inclusionRuleFail: ($parent.fail.indexOf($data) != -1)}">
+									<td></td>
+									<td><span data-bind="text: ($index()+1) + '.'"></span></td>
+									<td style="text-align: left"><span data-bind="text:name"></span></td>
+									<td><span data-bind="text:percentSatisfying"></span></td>
+									<td><span data-bind="text:percentExcluded"></span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</td>
+				<td style="padding-left: 25px; vertical-align: top; width: 500px; border-left: solid 1px #eee;">
+					<div class="header">Population Visualization</div>
+					<div class="visualization_container" data-bind="eventListener: [
+																								 { event: 'mouseover', selector: '.cell rect', callback: handleCellOver},
+																								 { event: 'mouseout', selector: '.cell rect', callback: describeClear}]">
+						<div style="height: 25px; text-align: center; line-height: 25px; font-size: 12px; color: #222;" class="rect_summary" data-bind="text: rectSummary"></div>
+						<div id="treemap" style="vertical-align: middle; text-align: center; width: 500px; margin: 7px auto 7px auto;" data-bind="populationTreemap: { data: report().treemapData }"></div>
+					</div>
+				</td>
+			</tr>
+		</table>
+		</div>
+	</div>
+	<div data-bind="attr: { id: 'cohortDetails' }">
+		<div class="tab_contents">
+			Comming Sooon
+		</div>
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko ifnot: report -->
+<div>
+	No results available.
+</div>	
+<!-- /ko -->
+
