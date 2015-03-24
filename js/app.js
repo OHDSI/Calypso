@@ -124,7 +124,7 @@ define(['knockout',
 			}
 			
 			self.addConceptSet = function(item) {
-				self.tabWidget().tabs("option", "active", 1); // index 1 is the Index Rule tab
+				self.tabWidget().tabs("option", "active", 0); // index 0 is the Index Rule tab
 				self.indexRuleEditorWidget().addConceptSet(item);
 			}			
 			
