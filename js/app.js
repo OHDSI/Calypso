@@ -10,8 +10,8 @@ define(['knockout',
 				'feasibilitystudy/components/InclusionRuleEditor',
 				'feasibilitystudy/components/FeasibilityReportViewer',
 				'cohortbuilder/components',
-				'cohortbuilder/bindings/datatableBinding',
-				'cohortbuilder/bindings/eventListenerBinding',
+				'databindings/datatableBinding',
+				'databindings/eventListenerBinding',
 				'bindings/jqAutosizeBinding',
 				'knockout-jqueryui/tabs'
 			 ],
@@ -99,7 +99,8 @@ define(['knockout',
 			self.info = ko.observable();
 			self.report = ko.observable();
 			self.tabWidget = ko.observable();
-			self.indexRuleEditorWidget = ko.observable();
+			self.indexRuleEditor = ko.observable();
+			self.conceptSetEditor = ko.observable();
 			self.phaseOptions = [{ id: 0, name: 'Phase 1' }, { id: 1, name: 'Phase 2' }, { id: 2, name: 'Phase 3' }, { id: 3, name: 'Phase 4' }]
 			self.dirtyFlag = ko.observable();
 			self.isRunning = ko.pureComputed(function () {
@@ -124,9 +125,11 @@ define(['knockout',
 			}
 			
 			self.addConceptSet = function(item) {
-				self.tabWidget().tabs("option", "active", 0); // index 0 is the Index Rule tab
-				self.indexRuleEditorWidget().addConceptSet(item);
-			}			
+				var fieldObservable = item.CodesetId;
+				var newConceptId = self.conceptSetEditor().createConceptSet().id;
+				fieldObservable(newConceptId);
+				self.tabWidget().tabs("option", "active", 2); // index 2 is the Concept Set Tab.
+			}
 			
 			self.selectStudy = function (studyTableItem) {
 				self.open(studyTableItem.id);
