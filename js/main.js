@@ -22,8 +22,8 @@ requirejs.config({
 		"d3": "http://cdn.rawgit.com/mbostock/d3/v3.5.5/d3.min",
 		"knockout": "http://cdn.rawgit.com/knockout/knockout/v3.3.0/dist/knockout",
 		// OHDSI components
-		"cohortbuilder": "http://cdn.rawgit.com/OHDSI/Circe/master/js/modules/cohortbuilder",
-		"conceptsetbuilder": "http://cdn.rawgit.com/OHDSI/Circe/master/js/modules/conceptsetbuilder",
+		"cohortbuilder": "http://rawgit.com/OHDSI/Circe/master/js/modules/cohortbuilder",
+		"conceptsetbuilder": "http://rawgit.com/OHDSI/Circe/master/js/modules/conceptsetbuilder",
 		"feasibilitystudy": "modules/feasibilitystudy",
 		"webapi" : "modules/WebAPIProvider",
 		"datatables": "jqueryui/jquery.dataTables.min",
