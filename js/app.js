@@ -125,10 +125,10 @@ define(['knockout',
 			}
 			
 			self.addConceptSet = function(item) {
+				self.tabWidget().tabs("option", "active", 2); // index 2 is the Concept Set Tab.
 				var fieldObservable = item.CodesetId;
 				var newConceptId = self.conceptSetEditor().createConceptSet().id;
 				fieldObservable(newConceptId);
-				self.tabWidget().tabs("option", "active", 2); // index 2 is the Concept Set Tab.
 			}
 			
 			self.selectStudy = function (studyTableItem) {
