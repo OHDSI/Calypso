@@ -2,6 +2,7 @@
 <html>
 
 <head>
+	<title>CALYPSO</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="icon" type="image/ico" href="favicon.ico" />
@@ -92,12 +93,15 @@
 							<li>
 								<a data-bind="attr: { title: 'Inclusion Rules', href: '#inclusionRules' }, text: 'Inclusion Rules'"></a>
 							</li>
+							<li data-bind="attr: { 'aria-controls': 'conceptsets' }">
+								<a data-bind="attr: { title: 'Concept Sets', href: '#conceptsets' }, text: 'Concept Sets'"></a>
+							</li>
 							<li>
 								<a data-bind="attr: { title: 'Results', href: '#results' }">Results</a>
 							</li>
 						</ul>
 						<div data-bind="attr: { id: 'indexRule' }">
-							<div class="tab_contents">						
+							<div class="tab_contents" data-bind="eventListener: [{ event: 'click', selector: '.addConceptSet', callback: addConceptSet}]" >
 								<!-- ko with: selectedStudy().indexRule -->						
 								<div>
 								<textarea maxlength="250" rows="1"
@@ -110,7 +114,7 @@
 														style="font-size: 1em; width: 100%; resize: none; overflow: hidden; word-wrap: break-word;" 
 														class="inputField" data-bind="value:description, jqAutoresize: {append: ''}"></textarea>
 								</div>
-								<cohort-expression-editor params="expression: expression, widget: $parent.indexRuleEditorWidget"></cohort-expression-editor>
+								<cohort-expression-editor params="expression: expression, widget: $parent.indexRuleEditor"></cohort-expression-editor>
 								<!-- /ko -->
 							</div>
 						</div>
@@ -157,6 +161,13 @@
 									</tr>
 								</tbody>
 							</table>
+							</div>
+						</div>
+						<div data-bind="attr: { id: 'conceptsets' }">
+							<div style="padding: 5px">
+								<!-- ko with: selectedStudy().indexRule.expression -->										
+								<concept-set-builder params="{conceptSets: ConceptSets, ref: $parent.conceptSetEditor}"></concept-set-builder>
+								<!-- /ko -->
 							</div>
 						</div>
 						<div data-bind="attr: { id: 'results' }">

@@ -49,7 +49,7 @@
 							<tbody data-bind="foreach: report().inclusionRuleStats">
 								<tr data-bind="css: {inclusionRulePass: ($parent.pass.indexOf($data) != -1), inclusionRuleFail: ($parent.fail.indexOf($data) != -1)}">
 									<td></td>
-									<td><span data-bind="text: ($index()+1) + '.'"></span></td>
+									<td style="vertical-align: top;"><span data-bind="text: ($index()+1) + '.'"></span></td>
 									<td style="text-align: left"><span data-bind="text:name"></span></td>
 									<td><span data-bind="text:percentSatisfying"></span></td>
 									<td><span data-bind="text:percentExcluded"></span></td>

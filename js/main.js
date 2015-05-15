@@ -1,19 +1,37 @@
-require.config({
+requirejs.config({
 	baseUrl: "js",
+	packages: [
+		{
+			name: "databindings",
+			location: "//rawgit.com/OHDSI/Circe/master/js/modules/databindings"
+		}
+	],	
+	config: {
+		text: {
+			useXhr: function (url, protocol, hostname, port) {
+				return true;
+			}
+		}
+	},
 	paths: {
+		// application configuration
 		"appConfig" : "config",
-		"text": "requirejs/plugins/text",
-		"css": "requirejs/plugins/css",
-		"json": "requirejs/plugins/json",
-		"jquery": "jquery-1.11.1.min",
+		// 3rd party libs
+		"jquery": "http://cdn.rawgit.com/jquery/jquery/1.11.2/dist/jquery.min",
 		"jquery-ui": "jqueryui/jquery-ui.min",
-		"d3": "d3.min",
-		"knockout": "knockout-3.3.0",
-		"cohortbuilder": "modules/cohortbuilder",
+		"d3": "http://cdn.rawgit.com/mbostock/d3/v3.5.5/d3.min",
+		"knockout": "http://cdn.rawgit.com/knockout/knockout/v3.3.0/dist/knockout",
+		// OHDSI components
+		"cohortbuilder": "http://cdn.rawgit.com/OHDSI/Circe/master/js/modules/cohortbuilder",
+		"conceptsetbuilder": "http://cdn.rawgit.com/OHDSI/Circe/master/js/modules/conceptsetbuilder",
 		"feasibilitystudy": "modules/feasibilitystudy",
 		"webapi" : "modules/WebAPIProvider",
 		"datatables": "jqueryui/jquery.dataTables.min",
 		"vocabularyprovider": "modules/WebAPIProvider/VocabularyProvider",
+		// plugins
+		"text": "requirejs/plugins/text",
+		"css": "requirejs/plugins/css",
+		"json": "requirejs/plugins/json",
 		"ColVis": "jqueryui/dataTables.colVis.min"
 	},
 	deps: ['jquery',
