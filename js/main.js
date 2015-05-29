@@ -3,7 +3,11 @@ requirejs.config({
 	packages: [
 		{
 			name: "databindings",
-			location: "//rawgit.com/OHDSI/Circe/master/js/modules/databindings"
+			location: "//rawgit.com/OHDSI/Circe/multihomed/js/modules/databindings"
+		},
+		{
+			name: "circe",
+			location: "//rawgit.com/OHDSI/Circe/multihomed/js/modules/circe"
 		}
 	],	
 	config: {
@@ -22,18 +26,24 @@ requirejs.config({
 		"d3": "http://cdn.rawgit.com/mbostock/d3/v3.5.5/d3.min",
 		"knockout": "http://cdn.rawgit.com/knockout/knockout/v3.3.0/dist/knockout",
 		"databindings/knockout.selectOnFocus": "http://cdn.rawgit.com/One-com/knockout-select-on-focus/v0.1.5/lib/knockout.selectOnFocus",
-		// OHDSI components
-		"cohortbuilder": "http://rawgit.com/OHDSI/Circe/master/js/modules/cohortbuilder",
-		"conceptsetbuilder": "http://rawgit.com/OHDSI/Circe/master/js/modules/conceptsetbuilder",
-		"feasibilitystudy": "modules/feasibilitystudy",
-		"webapi" : "modules/WebAPIProvider",
 		"datatables": "jqueryui/jquery.dataTables.min",
-		"vocabularyprovider": "modules/WebAPIProvider/VocabularyProvider",
+		// OHDSI components
+		"cohortbuilder": "http://rawgit.com/OHDSI/Circe/multihomed/js/modules/cohortbuilder",
+		"conceptsetbuilder": "http://rawgit.com/OHDSI/Circe/multihomed/js/modules/conceptsetbuilder",
+		"feasibilitystudy": "modules/feasibilitystudy",
+		"webapi" : "http://rawgit.com/OHDSI/Circe/multihomed/js/modules/WebAPIProvider",
+		
+		"vocabularyprovider": "http://rawgit.com/OHDSI/Circe/multihomed/js/modules/WebAPIProvider/VocabularyProvider",
 		// plugins
 		"text": "requirejs/plugins/text",
 		"css": "requirejs/plugins/css",
 		"json": "requirejs/plugins/json",
 		"ColVis": "jqueryui/dataTables.colVis.min"
+	},
+	map: {
+		"*": {
+			"webapi/FeasibilityAPI" : "modules/WebAPIProvider/FeasibilityAPI",
+		}
 	},
 	deps: ['jquery',
 				 'jquery-ui',

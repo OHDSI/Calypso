@@ -41,9 +41,9 @@ define(function (require, exports) {
 		return loadPromise;	
 	}
 	
-	function generate(id) {
+	function generate(id, sourceKey) {
 		var generatePromise = $.ajax({
-			url: config.webAPIRoot + 'feasibility/' + (id || '-1') + '/generate',
+			url: config.webAPIRoot + 'feasibility/' + (id || '-1') + '/generate/' + sourceKey,
 			error: function (error) {
 				console.log("Error: " + error);
 			}
@@ -61,9 +61,9 @@ define(function (require, exports) {
 		return infoPromise;
 	}
 	
-	function getReport(id) {
+	function getReport(id, sourceKey) {
 		var reportPromise = $.ajax({
-			url: config.webAPIRoot + 'feasibility/' + (id || '-1') + '/report',
+			url: config.webAPIRoot + 'feasibility/' + (id || '-1') + '/report/' + sourceKey,
 			error: function (error) {
 				console.log("Error: " + error);
 			}

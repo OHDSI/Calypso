@@ -23,7 +23,6 @@ define(['knockout',
 		function FeasibilityReportViewer(params) {
 			var self = this;
 			self.report = params.report;
-			self.info = params.info;
 			self.rectSummary = ko.observable();
 			self.pass = ko.observableArray();
 			self.fail = ko.observableArray();
@@ -71,11 +70,6 @@ define(['knockout',
 
 			if (params.viewerWidget) {
 				viewerWidget(self);
-			}
-
-			self.clickTest = function () {
-
-				console.log('Clicked...');
 			}
 		}
 

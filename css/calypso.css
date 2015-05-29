@@ -84,5 +84,10 @@ button.deleteInclusionRule
 			text-decoration: underline;
 	}
 
+table.sourceTable tr td, table.sourceTable th
+{
+	padding: 2px 5px;
+}
+
 
 

@@ -1,0 +1,24 @@
+<table class="sourceTable">
+	<thead>
+		<th style="width: 26px"></th>
+		<th>Source</th>
+		<th>Name</th>
+		<th>Dialect</th>
+		<th></th>
+	</thead>
+	<tbody data-bind="foreach: sources">
+		<tr>
+			<td align="center" data-bind="click:$parent.selectSource">
+				<img data-bind="visible: ($data == $parent.selectedSource())" src="images/view_selected.png"></img>
+				<img data-bind="visible: ($data != $parent.selectedSource())" src="images/view.png"></img>
+			</td>
+			<td data-bind="text: source.sourceKey"></td>
+			<td data-bind="text: source.sourceName"></td>
+			<td data-bind="text: source.sourceDialect"></td>
+			<td>
+				<generate-component params="{info: info, source: source, dirtyFlag: $parent.dirtyFlag}"></generate-component>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<feasibility-report-viewer params="{report: selectedReport}"></feasibility-report-viewer>

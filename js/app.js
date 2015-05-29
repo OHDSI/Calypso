@@ -6,9 +6,10 @@ define(['knockout',
 				'cohortbuilder/CriteriaGroup',
 				'webapi/CohortDefinitionAPI',
 				'webapi/FeasibilityAPI',
+				'webapi/SourceAPI',				
 				'feasibilitystudy/InclusionRule',
 				'feasibilitystudy/components/InclusionRuleEditor',
-				'feasibilitystudy/components/FeasibilityReportViewer',
+				'feasibilitystudy/components/FeasibilityResultsViewer',
 				'cohortbuilder/components',
 				'databindings/datatableBinding',
 				'databindings/eventListenerBinding',
@@ -24,6 +25,7 @@ define(['knockout',
 		CriteriaGroup,
 		cohortDefinitionAPI,
 		feasibilityAPI,
+		sourceAPI,
 		InclusionRule) {
 
 		function pruneJSON(key, value) {
@@ -72,19 +74,20 @@ define(['knockout',
 			var pollTimeout = null;
 			
 			function pollForInfo() {
-				feasibilityAPI.getInfo(self.selectedStudy().id()).then(function(info) {
-					self.info(info);
-					if (info && info.status != "COMPLETE")
+				feasibilityAPI.getInfo(self.selectedStudy().id()).then(function(infoList) {
+					var hasPending = false;
+					infoList.forEach(function(info){
+						var source = self.sources().filter(function (s) { return s.source.sourceId == info.id.sourceId })[0];
+						source.info(info);
+						if (info.status != "COMPLETE")
+							hasPending = true;
+					});
+					
+					if (hasPending)
 					{
 						pollTimeout = setTimeout(function () {
 							pollForInfo();
 						},5000);
-					}
-					if (info && info.status == "COMPLETE")
-					{
-						feasibilityAPI.getReport(self.selectedStudy().id()).then(function(report) {
-							self.report(report)
-						});						
 					}
 				});
 			}
@@ -101,10 +104,12 @@ define(['knockout',
 			self.tabWidget = ko.observable();
 			self.indexRuleEditor = ko.observable();
 			self.conceptSetEditor = ko.observable();
-			self.phaseOptions = [{ id: 0, name: 'Phase 1' }, { id: 1, name: 'Phase 2' }, { id: 2, name: 'Phase 3' }, { id: 3, name: 'Phase 4' }]
+			self.sources = ko.observableArray();
 			self.dirtyFlag = ko.observable();
 			self.isRunning = ko.pureComputed(function () {
-				return (self.info() && self.info().status != "COMPLETE");
+				return self.sources().filter(function (source) {
+					return source.info() && source.info().status != "COMPLETE";
+				}).length > 0;
 			});
 			self.isSaveable = ko.pureComputed(function() {
 				return self.dirtyFlag() && self.dirtyFlag().isDirty() && self.isRunning(); 
@@ -217,12 +222,12 @@ define(['knockout',
 				self.selectedView("detail");
 			}
 
-			self.generate = function() {
-				var generatePromise = feasibilityAPI.generate(self.selectedStudy().id());
+			self.onGenerate = function(generateComponent) {
+				var generatePromise = feasibilityAPI.generate(self.selectedStudy().id(), generateComponent.source.sourceKey);
 				generatePromise.then(function (result) {
 					pollForInfo();
 				});
-			}
+			}	
 			
 			self.showSql = function()
 			{
@@ -273,5 +278,17 @@ define(['knockout',
 					});
 				});
 			}
+			
+			// startup actions
+			sourceAPI.getSources().then(function(sources) {
+				var sourceList = [];
+				sources.forEach(function(source) {
+					sourceList.push({
+						source: source,
+						info: ko.observable()
+					});
+				});
+				self.sources(sourceList);
+			});			
 		}
 	});
