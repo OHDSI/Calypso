@@ -9,7 +9,7 @@ template) {
 	function InclusionRuleEditor(params) {
 		var self = this;
 		self.InclusionRule = params.InclusionRule;
-		self.IndexRule = ko.utils.unwrapObservable(params.IndexRule);
+		self.IndexRule = params.IndexRule;
 	}
 	
 	var component =  {

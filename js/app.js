@@ -156,6 +156,7 @@ define(['knockout',
 					var study = new FeasibilityStudy(study);
 					self.dirtyFlag(new dirtyFlag(study));					
 					self.selectedStudy(study);
+					self.selectedInclusionRule(null); // reset selectedInclusionRule to workaround an issue where inclusion rule editor was not resyncing with index rule causing concept set
 					if (priorInclusionIndex != null) // reset selected inclusion rule
 						self.selectedInclusionRule(study.inclusionRules()[priorInclusionIndex]);
 					self.selectedView("detail");
