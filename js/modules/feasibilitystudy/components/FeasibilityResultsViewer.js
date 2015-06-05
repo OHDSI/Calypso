@@ -26,8 +26,8 @@ define(['knockout',
 			
 			self.selectSource = function(source)
 			{
-				self.selectedSource(null);
 				if (source.info()) {
+					self.selectedSource(null);
 					feasibilityAPI.getReport(source.info().id.studyId, source.source.sourceKey).then(function(report) {
 						self.selectedSource(source);
 						self.selectedReport(report);

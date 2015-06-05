@@ -9,8 +9,10 @@
 	<tbody data-bind="foreach: sources">
 		<tr>
 			<td align="center" data-bind="click:$parent.selectSource">
+				<!-- ko if: $data.info -->
 				<img data-bind="visible: ($data == $parent.selectedSource())" src="images/view_selected.png"></img>
 				<img data-bind="visible: ($data != $parent.selectedSource())" src="images/view.png"></img>
+				<!-- /ko -->
 			</td>
 			<td data-bind="text: source.sourceKey"></td>
 			<td data-bind="text: source.sourceName"></td>

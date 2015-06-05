@@ -142,6 +142,11 @@ define(['knockout',
 			
 			self.open = function (id) {
 				feasibilityAPI.getStudy(id).then(function(study) {
+					// clear out prior generation info
+					self.sources().forEach(function (source) {
+						source.info(null);
+					});
+
 					
 					var priorInclusionIndex = null;
 					if (self.selectedStudy() && self.selectedInclusionRule())
