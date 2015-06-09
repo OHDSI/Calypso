@@ -179,6 +179,37 @@ define(['knockout',
 					self.open(result.id);
 				});
 			}
+			
+			self.copy = function () {
+				clearTimeout(pollTimeout);
+
+				// reset view after save
+				feasibilityAPI.copyStudy(self.selectedStudy().id()).then(function(result) {
+					console.log("Copied...");
+					self.selectedStudy(null);
+					self.selectedInclusionRule(null);
+					self.report(null);
+					self.info(null);					
+					self.open(result.id);
+				});
+			}
+			
+			self.delete = function () {
+				clearTimeout(pollTimeout);
+
+				// reset view after save
+				feasibilityAPI.deleteStudy(self.selectedStudy().id()).then(function(result) {
+					console.log("Deleted...");
+					self.refreshList().then(function () {
+						console.log("Refreshed...");
+						self.selectedStudy(null);
+						self.selectedInclusionRule(null);
+						self.report(null);
+						self.info(null);
+						self.selectedView("list");
+					});
+				});
+			}			
 
 			self.refreshList = function() {
 				var refreshPromise = feasibilityAPI.getStudyList();

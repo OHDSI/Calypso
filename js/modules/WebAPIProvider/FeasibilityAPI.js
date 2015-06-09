@@ -31,6 +31,29 @@ define(function (require, exports) {
 		return savePromise;
 	}
 	
+	function copyStudy(id) {
+		var copyPromise = $.ajax({
+			url: config.webAPIRoot + 'feasibility/' + (id || "") +"/copy",
+			method: 'GET',
+			contentType: 'application/json',
+			error: function (error) {
+				console.log("Error: " + error);
+			}
+		});
+		return copyPromise;
+	}	
+	
+	function deleteStudy(id) {
+		var deletePromise = $.ajax({
+			url: config.webAPIRoot + 'feasibility/' + (id || ""),
+			method: 'DELETE',
+			error: function (error) {
+				console.log("Error: " + error);
+			}
+		});
+		return deletePromise;
+	}		
+	
 	function getStudy(id) {
 		var loadPromise = $.ajax({
 			url: config.webAPIRoot + 'feasibility/' + id,
@@ -75,6 +98,8 @@ define(function (require, exports) {
 	var api = {
 		getStudyList: getStudyList,
 		saveStudy: saveStudy,
+		copyStudy: copyStudy,
+		deleteStudy: deleteStudy,
 		getStudy: getStudy,
 		generate: generate,
 		getInfo: getInfo,

@@ -66,8 +66,10 @@
 								<td style="padding-left: 5px;">
 									<button class="button button-small" data-bind="click: save, enable: (dirtyFlag().isDirty() && !isRunning()), css: {'button-flat-primary': !dirtyFlag().isDirty, 'button-flat-caution': dirtyFlag().isDirty}">Save</button>
 									<!-- ko if: selectedStudy().id() != null -->
+									<button class="button button-small button-flat-primary" data-bind="click: copy, enable: !dirtyFlag().isDirty()">Copy</button>
 									<!-- ko ifnot: isRunning -->
 									<button class="button button-flat-primary button-small" data-bind="click: generate, css: {disable: dirtyFlag().isDirty}, disable: dirtyFlag().isDirty">Generate</button>
+									<button class="button button-small button-flat-caution" data-bind="click: $root.delete">Delete</button>
 									<!-- /ko -->
 									<!-- ko if: isRunning -->
 									<img class="spin" src="images/running.png" />Generating...
