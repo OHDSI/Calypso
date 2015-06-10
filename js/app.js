@@ -200,7 +200,6 @@ define(['knockout',
 					self.selectedStudy(null);
 					self.selectedInclusionRule(null);
 					self.report(null);
-					self.info(null);					
 					self.open(result.id);
 				});
 			}
@@ -216,7 +215,10 @@ define(['knockout',
 						self.selectedStudy(null);
 						self.selectedInclusionRule(null);
 						self.report(null);
-						self.info(null);
+						// clear out prior generation info
+						self.sources().forEach(function (source) {
+							source.info(null);
+						});
 						self.selectedView("list");
 					});
 				});
@@ -244,7 +246,10 @@ define(['knockout',
 					self.selectedStudy(null);
 					self.selectedInclusionRule(null);
 					self.report(null);
-					self.info(null);
+					// clear out prior generation info
+					self.sources().forEach(function (source) {
+						source.info(null);
+					});
 					self.selectedView("list");
 				});
 			}
@@ -320,12 +325,17 @@ define(['knockout',
 			sourceAPI.getSources().then(function(sources) {
 				var sourceList = [];
 				sources.forEach(function(source) {
-					sourceList.push({
-						source: source,
-						info: ko.observable()
-					});
+					if (source.daimons.filter(function (daimon) { return daimon.daimonType == "CDM"; }).length > 0
+							&& source.daimons.filter(function (daimon) { return daimon.daimonType == "Results"; }).length > 0)
+					{
+						sourceList.push({
+							source: source,
+							info: ko.observable()
+						});
+					}
 				});
 				self.sources(sourceList);
-			});			
+			});
+		
 		}
 	});
