@@ -1,9 +1,22 @@
 /* Bootstrap overrides */
-@media (min-width: 1640px) {
+@media (min-width: 0px) {
+	.container {
+		width: 1020px;
+	}
+}
+
+@media (min-width: 1020px) {
+	.container {
+		width: 100%;
+	}
+}
+
+@media (min-width: 1480px) {
 	.container {
 		width: 1440px;
 	}
 }
+
 
 nav {
 	min-width: 480px;

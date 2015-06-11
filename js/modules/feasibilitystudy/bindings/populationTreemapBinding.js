@@ -31,8 +31,8 @@ define(['jquery', 'knockout', 'd3'], function ($, ko, d3) {
 	
 	function renderTreemap(data, target) {
 
-		w = 500;
-		h = 500;
+		w = 400;
+		h = 400;
 		x = d3.scale.linear().range([0, w]);
 		y = d3.scale.linear().range([0, h]);
 
