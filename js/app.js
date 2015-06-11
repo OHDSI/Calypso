@@ -132,7 +132,7 @@ define(['knockout',
 			}
 			
 			self.selectStudy = function (studyTableItem) {
-				self.open(studyTableItem.id);
+				window.location.hash = '/' + studyTableItem.id; 
 			}
 			
 			self.open = function (id) {
@@ -219,7 +219,7 @@ define(['knockout',
 				return refreshPromise;
 			}
 			
-			self.cancel = function () {
+			self.list = function () {
 				
 				// add check for changes without saving, prompt to confirm
 				if (self.dirtyFlag() && self.dirtyFlag().isDirty() && !confirm("Changes are not saved. Would you like to continue?"))
@@ -304,5 +304,11 @@ define(['knockout',
 					});
 				});
 			}
+			
+			self.routes = {
+				'' : self.list,
+				'/:id': self.open
+			};			
+			
 		}
 	});

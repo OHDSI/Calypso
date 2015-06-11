@@ -21,6 +21,7 @@ requirejs.config({
 		"jquery-ui": "jqueryui/jquery-ui.min",
 		"d3": "http://cdn.rawgit.com/mbostock/d3/v3.5.5/d3.min",
 		"knockout": "http://cdn.rawgit.com/knockout/knockout/v3.3.0/dist/knockout",
+		"director": "director.1.2.6.min",
 		"databindings/knockout.selectOnFocus": "http://cdn.rawgit.com/One-com/knockout-select-on-focus/v0.1.5/lib/knockout.selectOnFocus",
 		// OHDSI components
 		"cohortbuilder": "http://rawgit.com/OHDSI/Circe/master/js/modules/cohortbuilder",
@@ -35,6 +36,9 @@ requirejs.config({
 		"json": "requirejs/plugins/json",
 		"ColVis": "jqueryui/dataTables.colVis.min"
 	},
+	shim: { 
+		"director": { exports: "Router" } 
+	},
 	deps: ['jquery',
 				 'jquery-ui',
 				 'jqueryui/jquery.ui.autocomplete.scroll',
@@ -43,12 +47,12 @@ requirejs.config({
 				]
 });
 
-require(['jquery','knockout', 'app', ], function ($, ko, App) {
+require(['jquery','knockout', 'app', 'director' ], function ($, ko, App, Router) {
 	var calypsoApp = new App();
 	ko.applyBindings(calypsoApp, document.getElementById('wrapper'));
-	calypsoApp.refreshList().then(function (){
-		calypsoApp.selectedView("list");
-	});
+	
+	var router = Router(calypsoApp.routes);
+	router.init('/');
 
 	$(window).bind('beforeunload', function () {
 			if (calypsoApp.selectedStudy() &&  calypsoApp.dirtyFlag() && calypsoApp.dirtyFlag().isDirty())
