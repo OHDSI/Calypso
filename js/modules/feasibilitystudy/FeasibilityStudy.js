@@ -1,7 +1,7 @@
 define(function (require, exports) {
 
 	var ko = require('knockout');
-	var CohortDefinition = require('cohortbuilder/CohortDefinition');
+	var CohortExpression = require('cohortbuilder/CohortExpression');
 	var InclusionRule = require('./InclusionRule');
 
 	function FeasibilityStudy(data) {
@@ -17,7 +17,8 @@ define(function (require, exports) {
 		self.documentUrl = ko.observable(data.DocumentUrl || null);
 		self.clinicalTrialsIdentifier = ko.observable(data.ClinicalTrialsIdentifier || null);
 		
-		self.indexRule = new CohortDefinition(data.indexRule);
+		self.indexRule = ko.observable(new CohortExpression(data.indexRule));
+		self.indexDescription = ko.observable(data.indexDescription || null);
 		self.inclusionRules = ko.observableArray(data.inclusionRules && data.inclusionRules.map(function (inclusionRule) {
 			return new InclusionRule(inclusionRule);
 		}));

@@ -116,6 +116,8 @@ define(['knockout',
 			});
 			self.isGeneratedOpen = ko.observable(false);
 			self.generatedSql = {};
+			self.isImportOpen = ko.observable(false);
+			self.studyJSON = ko.observable();
 			
 			// model behaviors
 			self.addInclusionRule = function() {
@@ -154,7 +156,7 @@ define(['knockout',
 						priorInclusionIndex = self.selectedStudy().inclusionRules.indexOf(self.selectedInclusionRule());
 					}
 					// unwrap JSON stringified expressions into native JS objects
-					study.indexRule.expression = JSON.parse(study.indexRule.expression);
+					study.indexRule = JSON.parse(study.indexRule);
 					study.inclusionRules.forEach(function (inclusionRule) {
 						inclusionRule.expression = JSON.parse(inclusionRule.expression);
 					});
@@ -179,7 +181,7 @@ define(['knockout',
 				var study = ko.toJS(self.selectedStudy());
 
 				// for saving, we flatten the expresson JS into a JSON string
-				study.indexRule.expression = ko.toJSON(study.indexRule.expression, pruneJSON);
+				study.indexRule = ko.toJSON(study.indexRule, pruneJSON);
 				study.inclusionRules.forEach(function(inclusionRule) {
 					inclusionRule.expression =  ko.toJSON(inclusionRule.expression, pruneJSON);
 				});
@@ -320,6 +322,35 @@ define(['knockout',
 					});
 				});
 			}
+			self.showImprtExport = function ()
+			{
+				var study = self.selectedStudy();
+				var studyJS = {
+					indexRule:  ko.toJS(study.indexRule),
+					inclusionRules : study.inclusionRules().map(function (inclusionRule) {
+						return ko.toJS(inclusionRule);
+					})
+				}
+				
+				self.studyJSON(ko.toJSON(studyJS, pruneJSON, 2));
+				self.isImportOpen(true);	
+			}
+			
+			self.doImport = function()
+			{
+				console.log("todo: refresh objects");
+				var importData = JSON.parse(self.studyJSON());
+				var importStudy = ko.toJS(self.selectedStudy()); // work off of a copy of the selected study, we're only updating the indexRule and inclusionRules. Existing study name and IDs stay the same.
+				importStudy.indexRule = importData.indexRule;
+				importStudy.inclusionRules = importData.inclusionRules;
+				
+				var updatedStudy = new FeasibilityStudy(importStudy);
+				self.dirtyFlag(new dirtyFlag(updatedStudy, true)); // intial state is dirty					
+				self.selectedStudy(updatedStudy);
+				self.selectedInclusionRule(null); // reset selected inclusion rule
+				self.isImportOpen(false); // close import dialog
+			}
+			
 			self.routes = {
 				'' : self.list,
 				'/:id': self.open
