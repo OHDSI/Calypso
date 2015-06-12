@@ -65,6 +65,7 @@
 								</td>
 								<td style="padding-left: 5px;">
 									<button class="button button-small" data-bind="click: save, enable: (dirtyFlag().isDirty() && !isRunning()), css: {'button-flat-primary': !dirtyFlag().isDirty, 'button-flat-caution': dirtyFlag().isDirty}">Save</button>
+									<button class="button button-small button-flat-primary" data-bind="click: showImprtExport">Import</button>
 									<!-- ko if: selectedStudy().id() != null -->
 									<button class="button button-small button-flat-primary" data-bind="click: copy, enable: !dirtyFlag().isDirty()">Copy</button>
 									<!-- ko ifnot: isRunning -->
@@ -104,19 +105,14 @@
 						</ul>
 						<div data-bind="attr: { id: 'indexRule' }">
 							<div class="tab_contents" data-bind="eventListener: [{ event: 'click', selector: '.addConceptSet', callback: addConceptSet}]" >
-								<!-- ko with: selectedStudy().indexRule -->						
-								<div>
-								<textarea maxlength="250" rows="1"
-													style="font-size: 18px; width: 500px; resize: none; overflow: hidden; word-wrap: break-word;" 
-													class="inputField" data-bind="value: name, jqAutoresize: {append: ''}, css: { emptyInput: !(name() && (name().length > 0)) }"></textarea>
-								</div>
+								<!-- ko with: selectedStudy() -->						
 								<div>
 								Description:<br/>
 								<textarea maxlength="1000" rows="1"
 														style="font-size: 1em; width: 100%; resize: none; overflow: hidden; word-wrap: break-word;" 
-														class="inputField" data-bind="value:description, jqAutoresize: {append: ''}"></textarea>
+														class="inputField" data-bind="value:indexDescription, jqAutoresize: {append: ''}"></textarea>
 								</div>
-								<cohort-expression-editor params="expression: expression, widget: $parent.indexRuleEditor"></cohort-expression-editor>
+								<cohort-expression-editor params="expression: indexRule, widget: $parent.indexRuleEditor"></cohort-expression-editor>
 								<!-- /ko -->
 							</div>
 						</div>
@@ -154,7 +150,7 @@
 										</td>
 										<td style="vertical-align: top; padding-left: 25px; border-left: 1px #eee solid;">
 											<!-- ko if: selectedInclusionRule() -->
-											<inclusion-rule-editor params="{InclusionRule: selectedInclusionRule(), IndexRule: selectedStudy().indexRule}"></inclusion-rule-editor>
+											<inclusion-rule-editor params="{InclusionRule: selectedInclusionRule(), IndexRule: selectedStudy().indexRule()}"></inclusion-rule-editor>
 											<!-- /ko -->
 											<!-- ko ifnot: selectedInclusionRule() -->
 											<div>Please select an inclusion rule to edit.</div>
@@ -167,7 +163,7 @@
 						</div>
 						<div data-bind="attr: { id: 'conceptsets' }">
 							<div style="padding: 5px">
-								<!-- ko with: selectedStudy().indexRule.expression -->										
+								<!-- ko with: selectedStudy().indexRule -->										
 								<concept-set-builder params="{conceptSets: ConceptSets, ref: $parent.conceptSetEditor}"></concept-set-builder>
 								<!-- /ko -->
 							</div>
@@ -210,7 +206,18 @@
 							</div>
 						</div>
 					</div>
-					<!-- /ko -->					
+					<!-- /ko -->
+					
+					<!-- ko if: isImportOpen -->
+					<div title="Import Study..." style="padding: 0px; padding-top: 5px; padding-right: 5px" data-bind="dialog: { isOpen: isImportOpen, modal: true, width:700, height:500}">
+						<div style="height:100%; overflow: none; padding-top: 5px; padding-bottom: 40px;">
+							<textarea style="width: 100%; height: 100%; resize: none" data-bind="textInput: studyJSON"></textarea>
+						</div>
+						<div style="position: relative; margin-top: -30px; height: 30px; clear: both;">
+							<button class="button button-small button-flat-primary" data-bind="click: doImport">Import</button>
+						</div>
+					</div>
+					<!-- /ko -->						
 				</div>
 			</div>
 		</div>
