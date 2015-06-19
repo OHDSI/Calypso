@@ -34,7 +34,7 @@
 			<td class="dataCol" data-bind="text: summary && summary.matchingPersons"></td>
 			<td class="dataCol" data-bind="text: summary && summary.totalPersons"></td>
 			<td style="font-size: .9em" class="dataCol" data-bind="text: generationInfo.startTime"></td>
-			<td class="dataCol" data-bind="text: generationInfo.executionDuration"></td>
+			<td class="dataCol" data-bind="text: $component.msToTime(generationInfo.executionDuration)"></td>
 			<td class="dataCol" data-bind="text: generationInfo.isValid ? 'OK': 'ERROR'"></td>
 			<td><button class="button button-flat-caution button-vtiny removeResult">Remove</button></td>
 			<!-- /ko -->

@@ -37,6 +37,35 @@ define(['knockout',
 					});
 				}
 			}
+			
+			self.msToTime = function(s) {
+
+				function addZ(n) {
+						return (n < 10 ? '0' : '') + n;
+				}
+
+				function formatMS(n) {
+						if (n < 10) {
+								return '00' + n;
+						} else if (n < 100) {
+								return '0' + n;
+						}
+						else {
+								return n;
+						}
+				}
+
+				var ms = s % 1000;
+				s = (s - ms) / 1000;
+				var secs = s % 60;
+				s = (s - secs) / 60;
+				var mins = s % 60;
+
+				var hrs = (s - mins) / 60;
+
+				return addZ(hrs) + ':' + addZ(mins) + ':' + addZ(secs);
+      }
+
 		}
 
 		var component = {
