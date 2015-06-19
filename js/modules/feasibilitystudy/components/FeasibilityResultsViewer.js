@@ -2,16 +2,19 @@ define(['knockout',
 				'jquery',
 				'text!./FeasibilityResultsViewerTemplate.html',
 				'webapi/FeasibilityAPI',
+				'./GenerateComponentSmall',
 				'databindings/eventListenerBinding',
-				'circe',
 				'./FeasibilityReportViewer'
 			 ],
 	function (
 		ko,
 		$,
 		template,
-		feasibilityAPI) {
+		feasibilityAPI,
+		generateComponentSmall) {
 
+		ko.components.register('generate-component-small', generateComponentSmall);
+	
 		var x;
 
 		function FeasibilityResultsViewer(params) {
@@ -28,7 +31,7 @@ define(['knockout',
 			{
 				if (source.info()) {
 					self.selectedSource(null);
-					feasibilityAPI.getReport(source.info().id.studyId, source.source.sourceKey).then(function(report) {
+					feasibilityAPI.getReport(source.info().generationInfo.id.studyId, source.source.sourceKey).then(function(report) {
 						self.selectedSource(source);
 						self.selectedReport(report);
 					});

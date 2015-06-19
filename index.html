@@ -68,11 +68,9 @@
 									<button class="button button-small button-flat-primary" data-bind="click: showImprtExport">Import</button>
 									<!-- ko if: selectedStudy().id() != null -->
 									<button class="button button-small button-flat-primary" data-bind="click: copy, enable: !dirtyFlag().isDirty()">Copy</button>
+									<div class="generateAction" data-bind="ddSlickAction: generateActionsSettings "></div>
 									<!-- ko ifnot: isRunning -->
 									<button class="button button-small button-flat-caution" data-bind="click: $root.delete">Delete</button>
-									<!-- /ko -->
-									<!-- ko if: isRunning -->
-									<img class="spin" src="images/running.png" />Generating...
 									<!-- /ko -->
 									<!-- /ko -->
 									<button class="button button-flat-primary button-small" data-bind="click: showSql">Show SQL</button>
@@ -172,9 +170,11 @@
 								</div>
 							</div>
 						</div>
-						<div data-bind="attr: { id: 'results' }, eventListener: { event: 'click', selector: '.generate', callback: onGenerate}">
+						<div data-bind="attr: { id: 'results' }, 
+														eventListener: [{ event: 'click', selector: '.generate', callback: onGenerate},
+															{ event: 'click', selector: '.removeResult', callback: onRemoveResult}]">
 							<div class="tab_contents" style="padding:5px 5px 5px 5px;">
-								<feasibility-results-viewer params="sources: sources, dirtyFlag: dirtyFlag"></simulation-report-viewer>
+								<feasibility-results-viewer params="sources: filteredSources, dirtyFlag: dirtyFlag"></simulation-report-viewer>
 							</div>
 						</div>
 					</div>

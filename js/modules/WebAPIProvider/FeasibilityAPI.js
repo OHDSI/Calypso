@@ -84,6 +84,17 @@ define(function (require, exports) {
 		return infoPromise;
 	}
 	
+	function deleteInfo(id, sourceKey) {
+		var deletePromise = $.ajax({
+			url: config.webAPIRoot + 'feasibility/' + (id || '-1') + '/info/'+ sourceKey,
+			method: 'DELETE',
+			error: function (error) {
+				console.log("Error: " + error);
+			}
+		});
+		return deletePromise;
+	}
+	
 	function getReport(id, sourceKey) {
 		var reportPromise = $.ajax({
 			url: config.webAPIRoot + 'feasibility/' + (id || '-1') + '/report/' + sourceKey,
@@ -103,6 +114,7 @@ define(function (require, exports) {
 		getStudy: getStudy,
 		generate: generate,
 		getInfo: getInfo,
+		deleteInfo: deleteInfo,
 		getReport: getReport
 	}
 

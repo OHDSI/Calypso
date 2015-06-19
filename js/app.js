@@ -13,6 +13,7 @@ define(['knockout',
 				'cohortbuilder/components',
 				'databindings/datatableBinding',
 				'databindings/eventListenerBinding',
+				'databindings/ddSlickActionBinding',
 				'bindings/jqAutosizeBinding',
 				'knockout-jqueryui/tabs'
 			 ],
@@ -77,9 +78,9 @@ define(['knockout',
 				feasibilityAPI.getInfo(self.selectedStudy().id()).then(function(infoList) {
 					var hasPending = false;
 					infoList.forEach(function(info){
-						var source = self.sources().filter(function (s) { return s.source.sourceId == info.id.sourceId })[0];
+						var source = self.sources().filter(function (s) { return s.source.sourceId == info.generationInfo.id.sourceId })[0];
 						source.info(info);
-						if (info.status != "COMPLETE")
+						if (info.generationInfo.status != "COMPLETE")
 							hasPending = true;
 					});
 					
@@ -93,7 +94,7 @@ define(['knockout',
 			}
 											 
 			var self = this;
-
+			
 			// model state
 			self.selectedStudy = ko.observable();
 			self.selectedInclusionRule = ko.observable();
@@ -105,10 +106,16 @@ define(['knockout',
 			self.indexRuleEditor = ko.observable();
 			self.conceptSetEditor = ko.observable();
 			self.sources = ko.observableArray();
+			self.filteredSources = ko.pureComputed(function () {
+				return self.sources().filter(function (source) {
+					return source.info();
+				});
+			});
+			
 			self.dirtyFlag = ko.observable();
 			self.isRunning = ko.pureComputed(function () {
 				return self.sources().filter(function (source) {
-					return source.info() && source.info().status != "COMPLETE";
+					return source.info() && source.info().generationInfo.status != "COMPLETE";
 				}).length > 0;
 			});
 			self.isSaveable = ko.pureComputed(function() {
@@ -118,6 +125,17 @@ define(['knockout',
 			self.generatedSql = {};
 			self.isImportOpen = ko.observable(false);
 			self.studyJSON = ko.observable();
+
+		
+			self.generateActionsSettings = {
+				selectText: "Generate...",
+				width: 100,
+				actionOptions: null,  // initalized in the startup actions
+				onAction: function (data) {
+					data.selectedData.action();
+				}
+			};
+
 			
 			// model behaviors
 			self.addInclusionRule = function() {
@@ -271,7 +289,14 @@ define(['knockout',
 				generatePromise.then(function (result) {
 					pollForInfo();
 				});
-			}	
+			}
+			
+			self.onRemoveResult = function(studyGeneration) {
+				var targetSourceInfo = self.sources().filter(function (source) { return source.source.sourceId == studyGeneration.generationInfo.id.sourceId; })[0];
+				var removePromise = feasibilityAPI.deleteInfo(studyGeneration.generationInfo.id.studyId, targetSourceInfo.source.sourceKey).then (function() {
+					targetSourceInfo.info(null);
+				});
+			}				
 			
 			self.showSql = function()
 			{
@@ -354,7 +379,7 @@ define(['knockout',
 			self.routes = {
 				'' : self.list,
 				'/:id': self.open
-			};			
+			};		
 			
 			
 			// startup actions
@@ -371,7 +396,29 @@ define(['knockout',
 					}
 				});
 				self.sources(sourceList);
+				self.generateActionsSettings.actionOptions = sourceList.map(function (sourceItem) {
+					return {
+						text: sourceItem.source.sourceName,
+						selected: false,
+						description: "Perform Study on source: " + sourceItem.source.sourceName,
+						action: function() {
+							if (sourceItem.info()) {
+								sourceItem.info().generationInfo.status = "PENDING";
+								sourceItem.info.notifySubscribers();
+							} 
+							else {
+								tempInfo = { generationInfo : {
+									id : { sourceId: sourceItem.source.sourceId }
+								}};
+								sourceItem.info(tempInfo);
+							}
+							var generatePromise = feasibilityAPI.generate(self.selectedStudy().id(), sourceItem.source.sourceKey);
+							generatePromise.then(function (result) {
+								pollForInfo();
+							});
+						}
+					}
+				});				
 			});
-		
 		}
 	});
