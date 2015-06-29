@@ -32,12 +32,6 @@ table.inclusionRules tr td {
 }
 div.inclusionRuleType {
 	margin-top: 10px;
-	-webkit-user-select: none;
-	/* Chrome/Safari */
-	-moz-user-select: none;
-	/* Firefox */
-	-ms-user-select: none;
-	/* IE10+ */
 }
 div.inclusionRuleType .header {
 	font-size: 12px;
