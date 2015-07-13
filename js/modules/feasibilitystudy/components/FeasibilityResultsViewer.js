@@ -32,6 +32,10 @@ define(['knockout',
 				if (source.info()) {
 					self.selectedSource(null);
 					feasibilityAPI.getReport(source.info().generationInfo.id.studyId, source.source.sourceKey).then(function(report) {
+						// ensure report results are sorted in correct order (by id)
+						report.inclusionRuleStats.sort(function(a,b) {
+							return a.id - b.id;
+						});
 						self.selectedSource(source);
 						self.selectedReport(report);
 					});
