@@ -53,7 +53,7 @@
 						}
 					 }">
 				</table>
-				<button data-bind="click: newStudy">New Study</button>
+				<button data-bind="click: function() { router.setRoute('/new'); }">New Study</button>
 			</div>
 			<div data-bind="visible: selectedView() == 'detail'">
 				<div data-bind="if: selectedStudy()">

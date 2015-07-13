@@ -63,6 +63,7 @@ require(['jquery','knockout', 'app', 'director' ], function ($, ko, App, Router)
 	
 	var router = Router(calypsoApp.routes);
 	router.init('/');
+	calypsoApp.router = router;
 
 	$(window).bind('beforeunload', function () {
 			if (calypsoApp.selectedStudy() &&  calypsoApp.dirtyFlag() && calypsoApp.dirtyFlag().isDirty())

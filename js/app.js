@@ -96,6 +96,7 @@ define(['knockout',
 			var self = this;
 			
 			// model state
+			self.router = null;
 			self.selectedStudy = ko.observable();
 			self.selectedInclusionRule = ko.observable();
 			self.studyList = ko.observableArray();
@@ -207,7 +208,7 @@ define(['knockout',
 				// reset view after save
 				feasibilityAPI.saveStudy(study).then(function(result) {
 					console.log("Saved...");
-					self.open(result.id);
+					self.router.setRoute('/' + result.id);
 				});
 			}
 			
@@ -220,7 +221,7 @@ define(['knockout',
 					self.selectedStudy(null);
 					self.selectedInclusionRule(null);
 					self.report(null);
-					self.open(result.id);
+					self.router.setRoute('/' + result.id);
 				});
 			}
 			
@@ -239,7 +240,7 @@ define(['knockout',
 						self.sources().forEach(function (source) {
 							source.info(null);
 						});
-						self.selectedView("list");
+						self.router.setRoute('');
 					});
 				});
 			}			
@@ -378,6 +379,7 @@ define(['knockout',
 			
 			self.routes = {
 				'' : self.list,
+				'/new': self.newStudy,
 				'/:id': self.open
 			};		
 			
