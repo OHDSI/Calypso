@@ -84,5 +84,38 @@ button.deleteInclusionRule
 			text-decoration: underline;
 	}
 
+table.sourceTable tr td, table.sourceTable th
+{
+	padding: 1px 5px;
+}
 
+div.generateAction {
+	display: inline-block;
+  vertical-align: bottom;
+  line-height: 22px;
+}
+div.generateAction a {
+	color:black;
+}
 
+/* line 221, ../scss/partials/_buttons.scss */
+.sourceTable .button-vtiny {
+  font-size: 10px;
+  height: 18.4px;
+  line-height: 18.4px;
+  padding: 0px 14.92px;
+}
+
+/* line 245, ../scss/partials/_buttons.scss */
+.sourceTable input.button-vtiny, button.button-vtiny {
+  height: 18.4px;
+}
+
+.sourceTable th.smallHeading {
+	font-size:12px;
+	font-weight: bold;
+}
+
+.sourceTable .dataCol {
+	text-align: right;
+}

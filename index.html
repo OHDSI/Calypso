@@ -53,7 +53,7 @@
 						}
 					 }">
 				</table>
-				<button data-bind="click: newStudy">New Study</button>
+				<button data-bind="click: function() { router.setRoute('/new'); }">New Study</button>
 			</div>
 			<div data-bind="visible: selectedView() == 'detail'">
 				<div data-bind="if: selectedStudy()">
@@ -68,12 +68,9 @@
 									<button class="button button-small button-flat-primary" data-bind="click: showImprtExport">Import</button>
 									<!-- ko if: selectedStudy().id() != null -->
 									<button class="button button-small button-flat-primary" data-bind="click: copy, enable: !dirtyFlag().isDirty()">Copy</button>
+									<div class="generateAction" data-bind="ddSlickAction: generateActionsSettings "></div>
 									<!-- ko ifnot: isRunning -->
-									<button class="button button-flat-primary button-small" data-bind="click: generate, css: {disable: dirtyFlag().isDirty}, disable: dirtyFlag().isDirty">Generate</button>
 									<button class="button button-small button-flat-caution" data-bind="click: $root.delete">Delete</button>
-									<!-- /ko -->
-									<!-- ko if: isRunning -->
-									<img class="spin" src="images/running.png" />Generating...
 									<!-- /ko -->
 									<!-- /ko -->
 									<button class="button button-flat-primary button-small" data-bind="click: showSql">Show SQL</button>
@@ -100,7 +97,10 @@
 								<a data-bind="attr: { title: 'Concept Sets', href: '#conceptsets' }, text: 'Concept Sets'"></a>
 							</li>
 							<li>
-								<a data-bind="attr: { title: 'Results', href: '#results' }">Results</a>
+								<a data-bind="attr: { title: 'Results', href: '#results' }">Results
+									<!-- ko if: isRunning -->
+									<img class="spin" src="images/running.png" />
+									<!-- /ko --></a>
 							</li>
 						</ul>
 						<div data-bind="attr: { id: 'indexRule' }">
@@ -162,15 +162,19 @@
 							</div>
 						</div>
 						<div data-bind="attr: { id: 'conceptsets' }">
-							<div style="padding: 5px">
+							<div class="tab_contents">
+								<div style="padding: 5px">
 								<!-- ko with: selectedStudy().indexRule -->										
-								<concept-set-builder params="{conceptSets: ConceptSets, ref: $parent.conceptSetEditor}"></concept-set-builder>
-								<!-- /ko -->
+									<concept-set-builder params="{conceptSets: ConceptSets, ref: $parent.conceptSetEditor}"></concept-set-builder>
+									<!-- /ko -->
+								</div>
 							</div>
 						</div>
-						<div data-bind="attr: { id: 'results' }">
-							<div class="tab_contents" style="padding:5px 5px 5px 5px;">		
-								<feasibility-report-viewer params="info: info, report: report"></simulation-report-viewer>
+						<div data-bind="attr: { id: 'results' }, 
+														eventListener: [{ event: 'click', selector: '.generate', callback: onGenerate},
+															{ event: 'click', selector: '.removeResult', callback: onRemoveResult}]">
+							<div class="tab_contents" style="padding:5px 5px 5px 5px;">
+								<feasibility-results-viewer params="sources: filteredSources, dirtyFlag: dirtyFlag"></simulation-report-viewer>
 							</div>
 						</div>
 					</div>
@@ -217,7 +221,7 @@
 							<button class="button button-small button-flat-primary" data-bind="click: doImport">Import</button>
 						</div>
 					</div>
-					<!-- /ko -->						
+					<!-- /ko -->					
 				</div>
 			</div>
 		</div>

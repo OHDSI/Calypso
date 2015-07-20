@@ -3,7 +3,11 @@ requirejs.config({
 	packages: [
 		{
 			name: "databindings",
-			location: "//rawgit.com/OHDSI/Circe/master/js/modules/databindings"
+			location: "//rawgit.com/OHDSI/Circe/multihomed/js/modules/databindings"
+		},
+		{
+			name: "circe",
+			location: "//rawgit.com/OHDSI/Circe/multihomed/js/modules/circe"
 		}
 	],	
 	config: {
@@ -23,13 +27,14 @@ requirejs.config({
 		"knockout": "http://cdn.rawgit.com/knockout/knockout/v3.3.0/dist/knockout",
 		"director": "director.1.2.6.min",
 		"databindings/knockout.selectOnFocus": "http://cdn.rawgit.com/One-com/knockout-select-on-focus/v0.1.5/lib/knockout.selectOnFocus",
-		// OHDSI components
-		"cohortbuilder": "http://rawgit.com/OHDSI/Circe/master/js/modules/cohortbuilder",
-		"conceptsetbuilder": "http://rawgit.com/OHDSI/Circe/master/js/modules/conceptsetbuilder",
-		"feasibilitystudy": "modules/feasibilitystudy",
-		"webapi" : "modules/WebAPIProvider",
 		"datatables": "jqueryui/jquery.dataTables.min",
-		"vocabularyprovider": "modules/WebAPIProvider/VocabularyProvider",
+		// OHDSI components
+		"cohortbuilder": "http://rawgit.com/OHDSI/Circe/multihomed/js/modules/cohortbuilder",
+		"conceptsetbuilder": "http://rawgit.com/OHDSI/Circe/multihomed/js/modules/conceptsetbuilder",
+		"feasibilitystudy": "modules/feasibilitystudy",
+		"webapi" : "http://rawgit.com/OHDSI/Circe/multihomed/js/modules/WebAPIProvider",
+		
+		"vocabularyprovider": "http://rawgit.com/OHDSI/Circe/multihomed/js/modules/WebAPIProvider/VocabularyProvider",
 		// plugins
 		"text": "requirejs/plugins/text",
 		"css": "requirejs/plugins/css",
@@ -38,6 +43,11 @@ requirejs.config({
 	},
 	shim: { 
 		"director": { exports: "Router" } 
+	},
+	map: {
+		"*": {
+			"webapi/FeasibilityAPI" : "modules/WebAPIProvider/FeasibilityAPI",
+		}
 	},
 	deps: ['jquery',
 				 'jquery-ui',
@@ -53,6 +63,7 @@ require(['jquery','knockout', 'app', 'director' ], function ($, ko, App, Router)
 	
 	var router = Router(calypsoApp.routes);
 	router.init('/');
+	calypsoApp.router = router;
 
 	$(window).bind('beforeunload', function () {
 			if (calypsoApp.selectedStudy() &&  calypsoApp.dirtyFlag() && calypsoApp.dirtyFlag().isDirty())

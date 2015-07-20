@@ -64,9 +64,9 @@ define(function (require, exports) {
 		return loadPromise;	
 	}
 	
-	function generate(id) {
+	function generate(id, sourceKey) {
 		var generatePromise = $.ajax({
-			url: config.webAPIRoot + 'feasibility/' + (id || '-1') + '/generate',
+			url: config.webAPIRoot + 'feasibility/' + (id || '-1') + '/generate/' + sourceKey,
 			error: function (error) {
 				console.log("Error: " + error);
 			}
@@ -84,9 +84,20 @@ define(function (require, exports) {
 		return infoPromise;
 	}
 	
-	function getReport(id) {
+	function deleteInfo(id, sourceKey) {
+		var deletePromise = $.ajax({
+			url: config.webAPIRoot + 'feasibility/' + (id || '-1') + '/info/'+ sourceKey,
+			method: 'DELETE',
+			error: function (error) {
+				console.log("Error: " + error);
+			}
+		});
+		return deletePromise;
+	}
+	
+	function getReport(id, sourceKey) {
 		var reportPromise = $.ajax({
-			url: config.webAPIRoot + 'feasibility/' + (id || '-1') + '/report',
+			url: config.webAPIRoot + 'feasibility/' + (id || '-1') + '/report/' + sourceKey,
 			error: function (error) {
 				console.log("Error: " + error);
 			}
@@ -103,6 +114,7 @@ define(function (require, exports) {
 		getStudy: getStudy,
 		generate: generate,
 		getInfo: getInfo,
+		deleteInfo: deleteInfo,
 		getReport: getReport
 	}
 
