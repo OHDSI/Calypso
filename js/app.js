@@ -208,7 +208,10 @@ define(['knockout',
 				// reset view after save
 				feasibilityAPI.saveStudy(study).then(function(result) {
 					console.log("Saved...");
-					self.router.setRoute('/' + result.id);
+					if (!study.id) // reset route to new ID
+						self.router.setRoute('/' + result.id);
+					else // reload saved study
+						self.open(study.id);
 				});
 			}
 			
