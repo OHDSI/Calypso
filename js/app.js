@@ -304,7 +304,7 @@ define(['knockout',
 			
 			self.showSql = function()
 			{
-				var matchingCohortExpression = new CohortExpression(ko.toJS(self.selectedStudy().indexRule.expression));
+				var matchingCohortExpression = new CohortExpression(ko.toJS(self.selectedStudy().indexRule()));
 				if (!matchingCohortExpression.AdditionalCriteria())
 					matchingCohortExpression.AdditionalCriteria(new CriteriaGroup());
 				if (matchingCohortExpression.AdditionalCriteria().Type() == "ANY")
