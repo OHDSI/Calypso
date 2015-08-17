@@ -12,10 +12,8 @@ define(function (require, exports) {
 		self.id = ko.observable(data.id || null);
 		self.name = ko.observable(data.name || null);
 		self.description = ko.observable(data.description || null);
-		self.phaseId = ko.observable(data.PhaseId || null);
-		self.sampleSize = ko.observable(data.SampleSize || null);
-		self.documentUrl = ko.observable(data.DocumentUrl || null);
-		self.clinicalTrialsIdentifier = ko.observable(data.ClinicalTrialsIdentifier || null);
+		self.indexCohortId = ko.observable(data.indexCohortId || null);
+		self.matchingCohortId = ko.observable(data.matchingCohortId || null);
 		
 		self.indexRule = ko.observable(new CohortExpression(data.indexRule));
 		self.indexDescription = ko.observable(data.indexDescription || null);

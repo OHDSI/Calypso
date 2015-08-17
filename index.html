@@ -84,7 +84,21 @@
 							</tr>
 						</tbody>
 					</table>
-
+					<table>
+						<tbody>
+							<tr>
+								<!-- ko if: selectedStudy().indexCohortId() -->
+								<td class="header">Index Cohort ID: </td>
+								<td> <span data-bind="text: selectedStudy().indexCohortId"></span></td>
+								<!-- /ko -->
+								<!-- ko if: selectedStudy().matchingCohortId() -->
+								<td width="20"></td>
+								<td class="header">Matching Cohort ID:</td>
+								<td> <span data-bind="text: selectedStudy().matchingCohortId"></span></td>
+								<!-- /ko -->
+							</tr>
+						</tbody>
+					</table>
 					<div class="tabs" data-bind="tabs: { widget: tabWidget }">
 						<ul>
 							<li>
