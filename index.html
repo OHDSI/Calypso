@@ -12,6 +12,19 @@
 	<link rel="stylesheet" href="css/calypso.boostrap.css" />
 	<link rel="stylesheet" href="css/calypso.css" />
 
+	<style>
+	.divtext {
+		border: ridge 2px;
+		padding: 5px;
+		width: 100%;
+		min-height: 1.2em;
+		overflow: auto;
+		white-space: pre-wrap; 
+		border: 1px solid rgb(204, 204, 204);
+		background-color: rgb(238, 238, 238);
+	}
+	</style>
+	
 	<script src="js/require.js"></script>
 	<script src="js/main.js"></script>
 </head>
@@ -122,11 +135,9 @@
 								<!-- ko with: selectedStudy() -->						
 								<div>
 								Description:<br/>
-								<textarea maxlength="1000" rows="1"
-														style="font-size: 1em; width: 100%; resize: none; overflow: hidden; word-wrap: break-word;" 
-														class="inputField" data-bind="value:indexDescription, jqAutoresize: {append: ''}"></textarea>
-								</div>
+								<div contenteditable class="divtext" data-bind="htmlValue:indexDescription"></div>
 								<cohort-expression-editor params="expression: indexRule, widget: $parent.indexRuleEditor"></cohort-expression-editor>
+								</div>
 								<!-- /ko -->
 							</div>
 						</div>
