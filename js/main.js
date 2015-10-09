@@ -30,6 +30,7 @@ requirejs.config({
 		"datatables": "jqueryui/jquery.dataTables.min",
 		// OHDSI components
 		"cohortbuilder": "http://rawgit.com/OHDSI/Circe/master/js/modules/cohortbuilder",
+		"conceptpicker": "http://rawgit.com/OHDSI/Circe/master/js/modules/conceptpicker",
 		"conceptsetbuilder": "http://rawgit.com/OHDSI/Circe/master/js/modules/conceptsetbuilder",
 		"feasibilitystudy": "modules/feasibilitystudy",
 		"webapi" : "http://rawgit.com/OHDSI/Circe/master/js/modules/WebAPIProvider",
