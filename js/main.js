@@ -11,7 +11,7 @@ requirejs.config({
 		},
 		{
 			name: "cohortdefinitionviewer",
-			location: "/circe/js/modules/cohortdefinitionviewer"
+			location: "//rawgit.com/OHDSI/Circe/master/js/modules/cohortdefinitionviewer"
 		}
 	],	
 	config: {
