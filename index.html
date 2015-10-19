@@ -123,6 +123,9 @@
 							<li data-bind="attr: { 'aria-controls': 'conceptsets' }">
 								<a data-bind="attr: { title: 'Concept Sets', href: '#conceptsets' }, text: 'Concept Sets'"></a>
 							</li>
+							<li data-bind="attr: { 'aria-controls': 'printfriendly' }">
+								<a data-bind="attr: { title: 'Print Friendly', href: '#printfriendly' }, text: 'Print Friendly'"></a>
+							</li>
 							<li>
 								<a data-bind="attr: { title: 'Results', href: '#results' }">Results
 									<!-- ko if: isRunning -->
@@ -195,6 +198,31 @@
 								</div>
 							</div>
 						</div>
+						<div data-bind="attr: { id: 'printfriendly' }">
+							<div class="tab_contents">
+								<div style="padding: 5px">
+								<!-- ko with: selectedStudy() -->										
+									<div style="font-size:1.3em">Index Rule Definition:</div>
+									<cohort-expression-viewer params="expression: indexRule"></cohort-expression-viewer>
+									<br/>
+									<!-- ko foreach: inclusionRules -->
+										<div style="font-size:1.3em">Inclusion rule <span data-bind="text: ($index() + 1)"></span>: <span data-bind="text: name"></span></div>
+										<criteria-group-viewer params="{expression: $parent.indexRule, group: ko.observable(expression)}"></criteria-group-viewer>
+									<br/>
+									<!-- /ko -->
+									<div style="font-size:1.3em">Appendix 1: Concept Set Definitions</div>
+									<br/>
+									<!-- ko foreach: indexRule().ConceptSets.sorted -->
+									<div style="font-size: 1.15em"><span data-bind="text: ($index() + 1)"></span>. <span data-bind="text: $data.name"></span></div>
+									<div style="padding-left:20px">
+									<conceptset-viewer params="{conceptSet: $data}"></conceptset-viewer>
+									<br/>
+									</div>
+									<!-- /ko -->									
+								<!-- /ko -->
+								</div>
+							</div>
+						</div>						
 						<div data-bind="attr: { id: 'results' }, 
 														eventListener: [{ event: 'click', selector: '.generate', callback: onGenerate},
 															{ event: 'click', selector: '.removeResult', callback: onRemoveResult}]">

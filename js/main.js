@@ -8,6 +8,10 @@ requirejs.config({
 		{
 			name: "circe",
 			location: "//rawgit.com/OHDSI/Circe/master/js/modules/circe"
+		},
+		{
+			name: "cohortdefinitionviewer",
+			location: "/circe/js/modules/cohortdefinitionviewer"
 		}
 	],	
 	config: {
