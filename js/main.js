@@ -25,21 +25,21 @@ requirejs.config({
 		// application configuration
 		"appConfig" : "config",
 		// 3rd party libs
-		"jquery": "http://cdn.rawgit.com/jquery/jquery/1.11.2/dist/jquery.min",
+		"jquery": "//cdn.rawgit.com/jquery/jquery/1.11.2/dist/jquery.min",
 		"jquery-ui": "jqueryui/jquery-ui.min",
-		"d3": "http://cdn.rawgit.com/mbostock/d3/v3.5.5/d3.min",
-		"knockout": "http://cdn.rawgit.com/knockout/knockout/v3.3.0/dist/knockout",
+		"d3": "//cdn.rawgit.com/mbostock/d3/v3.5.5/d3.min",
+		"knockout": "//cdn.rawgit.com/knockout/knockout/v3.3.0/dist/knockout",
 		"director": "director.1.2.6.min",
-		"databindings/knockout.selectOnFocus": "http://cdn.rawgit.com/One-com/knockout-select-on-focus/v0.1.5/lib/knockout.selectOnFocus",
+		"databindings/knockout.selectOnFocus": "//cdn.rawgit.com/One-com/knockout-select-on-focus/v0.1.5/lib/knockout.selectOnFocus",
 		"datatables": "jqueryui/jquery.dataTables.min",
 		// OHDSI components
-		"cohortbuilder": "http://rawgit.com/OHDSI/Circe/master/js/modules/cohortbuilder",
-		"conceptpicker": "http://rawgit.com/OHDSI/Circe/master/js/modules/conceptpicker",
-		"conceptsetbuilder": "http://rawgit.com/OHDSI/Circe/master/js/modules/conceptsetbuilder",
+		"cohortbuilder": "//rawgit.com/OHDSI/Circe/master/js/modules/cohortbuilder",
+		"conceptpicker": "//rawgit.com/OHDSI/Circe/master/js/modules/conceptpicker",
+		"conceptsetbuilder": "//rawgit.com/OHDSI/Circe/master/js/modules/conceptsetbuilder",
 		"feasibilitystudy": "modules/feasibilitystudy",
-		"webapi" : "http://rawgit.com/OHDSI/Circe/master/js/modules/WebAPIProvider",
+		"webapi" : "//rawgit.com/OHDSI/Circe/master/js/modules/WebAPIProvider",
 		
-		"vocabularyprovider": "http://rawgit.com/OHDSI/Circe/master/js/modules/WebAPIProvider/VocabularyProvider",
+		"vocabularyprovider": "//rawgit.com/OHDSI/Circe/master/js/modules/WebAPIProvider/VocabularyProvider",
 		// plugins
 		"text": "requirejs/plugins/text",
 		"css": "requirejs/plugins/css",
