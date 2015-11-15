@@ -25,13 +25,13 @@ requirejs.config({
 		// application configuration
 		"appConfig" : "config",
 		// 3rd party libs
-		"jquery": "//cdn.rawgit.com/jquery/jquery/1.11.2/dist/jquery.min",
-		"jquery-ui": "jqueryui/jquery-ui.min",
-		"d3": "//cdn.rawgit.com/mbostock/d3/v3.5.5/d3.min",
-		"knockout": "//cdn.rawgit.com/knockout/knockout/v3.3.0/dist/knockout",
-		"director": "director.1.2.6.min",
+		"jquery": "//code.jquery.com/jquery-1.11.2",
+		"jquery-ui": "//code.jquery.com/ui/1.11.4/jquery-ui.min",
+		"d3": "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.8/d3.min",
+		"knockout": "//cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min",
+		"director": "//cdnjs.cloudflare.com/ajax/libs/Director/1.2.8/director.min",
 		"databindings/knockout.selectOnFocus": "//cdn.rawgit.com/One-com/knockout-select-on-focus/v0.1.5/lib/knockout.selectOnFocus",
-		"datatables": "jqueryui/jquery.dataTables.min",
+		"datatables": "//cdn.datatables.net/1.10.10/js/jquery.dataTables.min",
 		// OHDSI components
 		"cohortbuilder": "//rawgit.com/OHDSI/Circe/master/js/modules/cohortbuilder",
 		"conceptpicker": "//rawgit.com/OHDSI/Circe/master/js/modules/conceptpicker",
@@ -57,7 +57,7 @@ requirejs.config({
 	deps: ['jquery',
 				 'jquery-ui',
 				 'jqueryui/jquery.ui.autocomplete.scroll',
-				 'css!jqueryui/jquery.dataTables.css',
+				 'css!//cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css',
 				 'css!jqueryui/dataTables.colVis.css'
 				]
 });
