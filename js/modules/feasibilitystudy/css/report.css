@@ -30,9 +30,6 @@ table.inclusionRules tr td {
 	cursor: pointer;
 	padding: 3px 3px 3px 3px;
 }
-div.inclusionRuleType {
-	margin-top: 10px;
-}
 div.inclusionRuleType .header {
 	font-size: 12px;
 	font-weight: bold;
@@ -62,4 +59,20 @@ rect.selected {
 
 .inclusionRuleFail {
 	color: #f44;
+}
+
+div.attritionbar {
+	border: solid 1px #B4BAA5;
+	margin-left:auto;
+	margin-right:auto;
+	height: 15px;
+}
+
+span.toggleView {
+	cursor:pointer;
+	color:blue;
+}
+
+span.toggleView:hover {
+	text-decoration: underline;
 }
