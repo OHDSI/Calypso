@@ -159,22 +159,22 @@
 											<div>
 												<span class="header">Inclusion Rules</span> <span class="criteriaAddLink" data-bind="click: addInclusionRule">new</span>
 											</div>
-											<!-- ko foreach: selectedStudy().inclusionRules -->
-											<table style="width: 100%" class="inclusionRules">
-												<colgroup>
-													<col style="width: 25px;" />
-													<col />
-												</colgroup>
-												<tbody>
-													<tr data-bind="click: $root.selectInclusionRule, css: { selectedInclusion: $data == $root.selectedInclusionRule() }">
-														<td style="text-align: right; vertical-align: top;">
-															<span data-bind="text: $index() + 1"></span>.
-														</td>
-														<td style="vertical-align: top;" class="inclusionRules" data-bind="text: ((name() || '').length > 0) ? name() : 'Unnamed Rule' "></td>
-													</tr>
-												</tbody>
-											</table>
-											<!-- /ko -->
+											<div data-bind="sortable: {data: selectedStudy().inclusionRules, connectClass: 'inclusionRuleItem'}">
+												<table style="width: 100%" class="inclusionRules">
+													<colgroup>
+														<col style="width: 25px;" />
+														<col />
+													</colgroup>
+													<tbody>
+														<tr data-bind="click: $root.selectInclusionRule, css: { selectedInclusion: $data == $root.selectedInclusionRule() }">
+															<td style="text-align: right; vertical-align: top;">
+																<span data-bind="text: $index() + 1"></span>.
+															</td>
+															<td style="vertical-align: top;" class="inclusionRules" data-bind="text: ((name() || '').length > 0) ? name() : 'Unnamed Rule' "></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
 										</td>
 										<td style="vertical-align: top; padding-left: 25px; border-left: 1px #eee solid;">
 											<!-- ko if: selectedInclusionRule() -->
