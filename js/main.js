@@ -25,19 +25,20 @@ requirejs.config({
 		// application configuration
 		"appConfig" : "config",
 		// 3rd party libs
-		"jquery": "//code.jquery.com/jquery-1.11.2",
-		"jquery-ui": "//code.jquery.com/ui/1.11.4/jquery-ui.min",
-		"d3": "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.8/d3.min",
-		"knockout": "//cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min",
-		"director": "//cdnjs.cloudflare.com/ajax/libs/Director/1.2.8/director.min",
-		"databindings/knockout.selectOnFocus": "//cdn.rawgit.com/One-com/knockout-select-on-focus/v0.1.5/lib/knockout.selectOnFocus",
-		"datatables": "//cdn.datatables.net/1.10.10/js/jquery.dataTables.min",
+		"jquery": "https://code.jquery.com/jquery-1.11.2",
+		"jquery-ui": "https://code.jquery.com/ui/1.11.4/jquery-ui.min",
+		"d3": "https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.8/d3.min",
+		"knockout": "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min",
+		"ko.sortable": "https://cdnjs.cloudflare.com/ajax/libs/knockout-sortable/0.11.0/knockout-sortable",
+		"director": "https://cdnjs.cloudflare.com/ajax/libs/Director/1.2.8/director.min",
+		"databindings/knockout.selectOnFocus": "https://cdn.rawgit.com/One-com/knockout-select-on-focus/v0.1.5/lib/knockout.selectOnFocus",
+		"datatables": "https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min",
 		// OHDSI components
-		"cohortbuilder": "//rawgit.com/OHDSI/Circe/master/js/modules/cohortbuilder",
-		"conceptpicker": "//rawgit.com/OHDSI/Circe/master/js/modules/conceptpicker",
-		"conceptsetbuilder": "//rawgit.com/OHDSI/Circe/master/js/modules/conceptsetbuilder",
+		"cohortbuilder": "https://rawgit.com/OHDSI/Circe/master/js/modules/cohortbuilder",
+		"conceptpicker": "https://rawgit.com/OHDSI/Circe/master/js/modules/conceptpicker",
+		"conceptsetbuilder": "https://rawgit.com/OHDSI/Circe/master/js/modules/conceptsetbuilder",
 		"feasibilitystudy": "modules/feasibilitystudy",
-		"webapi" : "//rawgit.com/OHDSI/Circe/master/js/modules/WebAPIProvider",
+		"webapi" : "https://rawgit.com/OHDSI/Circe/master/js/modules/WebAPIProvider",
 		
 		"vocabularyprovider": "//rawgit.com/OHDSI/Circe/master/js/modules/WebAPIProvider/VocabularyProvider",
 		// plugins
@@ -52,6 +53,11 @@ requirejs.config({
 	map: {
 		"*": {
 			"webapi/FeasibilityAPI" : "modules/WebAPIProvider/FeasibilityAPI",
+			'jquery-ui/sortable' : 'jquery-ui',
+			'jquery-ui/draggable' : 'jquery-ui',
+			'jquery-ui/dialog' : 'jquery-ui',
+			'jquery-ui/autocomplate': 'jquery-ui',
+			'jquery-ui/tabs': 'jquery-ui'
 		}
 	},
 	deps: ['jquery',
