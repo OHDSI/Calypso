@@ -17,7 +17,7 @@ template) {
 		template: template
 	};		
 
-	ko.components.register('inclusion-rule-editor', component);
+	ko.components.register('feasibility-inclusion-rule-editor', component);
 	
 	// return compoonent definition
 	return component;

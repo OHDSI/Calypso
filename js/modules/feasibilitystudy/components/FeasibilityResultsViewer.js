@@ -3,6 +3,7 @@ define(['knockout',
 				'text!./FeasibilityResultsViewerTemplate.html',
 				'webapi/FeasibilityAPI',
 				'./GenerateComponentSmall',
+				'appConfig',
 				'databindings/eventListenerBinding',
 				'./FeasibilityReportViewer'
 			 ],
@@ -11,6 +12,7 @@ define(['knockout',
 		$,
 		template,
 		feasibilityAPI,
+		config,
 		generateComponentSmall) {
 
 		ko.components.register('generate-component-small', generateComponentSmall);
@@ -19,7 +21,7 @@ define(['knockout',
 
 		function FeasibilityResultsViewer(params) {
 			var self = this;
-			
+			self.config = config;
 			self.sources = params.sources;
 			self.dirtyFlag = params.dirtyFlag;
 			self.selectedSource = ko.observable();

@@ -1,8 +1,16 @@
 define([], function () {
 	var config = {};
-	
-	config.webAPIRoot = "http://localhost:8080/WebAPI/";
-	
+
+	config.services = [
+		{
+			name: 'Local',
+			url: 'http://localhost:8080/WebAPI/'
+		}
+		];
+
+	config.webAPIRoot = config.services[0].url;
+	config.readOnly = true;
+
 	return config;
-	
+
 });

@@ -80,9 +80,9 @@ define(function (require, exports) {
 		return getSqlPromise;
 	}
 	
-	function generate(cohortDefinitionId) {
+	function generate(cohortDefinitionId, sourceKey) {
 		var generatePromise = $.ajax({
-			url: config.webAPIRoot + 'cohortdefinition/' + (cohortDefinitionId || '-1') + '/generate',
+			url: config.webAPIRoot + 'cohortdefinition/' + (cohortDefinitionId || '-1') + '/generate/' + sourceKey,
 			error: function (error) {
 				console.log("Error: " + error);
 			}
@@ -100,6 +100,15 @@ define(function (require, exports) {
 		return infoPromise;
 	}
 	
+	function getReport(cohortDefinitionId, sourceKey) {
+		var reportPromise = $.ajax({
+			url: config.webAPIRoot + 'cohortdefinition/' + (cohortDefinitionId || '-1') + '/report/' + sourceKey,
+			error: function (error) {
+				console.log("Error: " + error);
+			}
+		});
+		return reportPromise;
+	}	
 	
 	var api = {
 		getCohortDefinitionList: getCohortDefinitionList,
@@ -109,7 +118,8 @@ define(function (require, exports) {
 		getCohortDefinition: getCohortDefinition,
 		getSql: getSql,
 		generate: generate,
-		getInfo: getInfo
+		getInfo: getInfo,
+		getReport: getReport
 	}
 
 	return api;

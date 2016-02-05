@@ -6,6 +6,7 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="icon" type="image/ico" href="favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="/atlas/js/styles/font-awesome.min.css">	
 	<link href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet" />
 	<link rel="stylesheet" href="css/bootstrap.min.css" />
 	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
@@ -30,6 +31,7 @@
 </head>
 
 <body>
+	<div style="text-align: center; background-color: red" data-bind="if: config.readOnly">CALYPSO is in READ-ONLY mode</div>
 	<div data-bind="visible: selectedView() != null" id="wrapper" style="display:none">
 		<table>
 			<tr>
@@ -66,7 +68,7 @@
 						}
 					 }">
 				</table>
-				<button data-bind="click: function() { router.setRoute('/new'); }">New Study</button>
+				<!-- ko ifnot: config.readOnly --><button data-bind="click: function() { router.setRoute('/new'); }">New Study</button><!-- /ko -->
 			</div>
 			<div data-bind="visible: selectedView() == 'detail'">
 				<div data-bind="if: selectedStudy()">
@@ -77,6 +79,7 @@
 									<textarea maxlength="250" style="font-size: 18px; line-height: 1em; width: 500px; resize: none; overflow: hidden; word-wrap: break-word;" class="inputField" data-bind="textInput: selectedStudy().name, css: { emptyInput: !(selectedStudy().name() && (selectedStudy().name().length > 0)) }, jqAutoresize: {append: ''}"></textarea>
 								</td>
 								<td style="padding-left: 5px;">
+									<!-- ko ifnot: config.readOnly -->
 									<button class="button button-small" data-bind="click: save, enable: (dirtyFlag().isDirty() && !isRunning()), css: {'button-flat-primary': !dirtyFlag().isDirty, 'button-flat-caution': dirtyFlag().isDirty}">Save</button>
 									<button class="button button-small button-flat-primary" data-bind="click: showImprtExport">Import</button>
 									<!-- ko if: selectedStudy().id() != null -->
@@ -87,6 +90,10 @@
 									<!-- /ko -->
 									<!-- /ko -->
 									<button class="button button-flat-primary button-small" data-bind="click: showSql">Show SQL</button>
+									<!-- /ko -->
+									<!-- if: config.readOnly -->
+									CALYPSO is in READ-ONLY mode
+									<!-- /ko -->
 								</td>
 							</tr>
 							<tr>
@@ -134,7 +141,7 @@
 							</li>
 						</ul>
 						<div data-bind="attr: { id: 'indexRule' }">
-							<div class="tab_contents" data-bind="eventListener: [{ event: 'click', selector: '.addConceptSet', callback: addConceptSet}]" >
+							<div class="tab_contents" data-bind="eventListener: { event: 'click', selector: '.conceptset_selector', callback: selectConceptSet}" >
 								<!-- ko with: selectedStudy() -->						
 								<div>
 								Description:<br/>
@@ -148,7 +155,7 @@
 							<div class="tab_contents" data-bind="eventListener: [
 																									 { event: 'click', selector: '.copyInclusionRule', callback: copyInclusionRule},
 																									 { event: 'click', selector: '.deleteInclusionRule', callback: deleteInclusionRule},
-																									 { event: 'click', selector: '.addConceptSet', callback: addConceptSet}]" >								
+																									 { event: 'click', selector: '.conceptset_selector', callback: selectConceptSet}]" >								
 								<table style="width: 100%">
 								<colgroup>
 									<col span="1" style="width: 300px;" />
@@ -179,7 +186,7 @@
 										</td>
 										<td style="vertical-align: top; padding-left: 25px; border-left: 1px #eee solid;">
 											<!-- ko if: selectedInclusionRule() -->
-											<inclusion-rule-editor params="{InclusionRule: selectedInclusionRule(), IndexRule: selectedStudy().indexRule()}"></inclusion-rule-editor>
+											<feasibility-inclusion-rule-editor params="{InclusionRule: selectedInclusionRule(), IndexRule: selectedStudy().indexRule()}"></feasibility-inclusion-rule-editor>
 											<!-- /ko -->
 											<!-- ko ifnot: selectedInclusionRule() -->
 											<div>Please select an inclusion rule to edit.</div>
@@ -232,7 +239,10 @@
 							</div>
 						</div>
 					</div>
-					
+					<div title="Select Concept Set..." data-bind="dialog: {isOpen: isSelectConceptSetOpen, modal: true, width:'80%', height:600}">
+						<cohort-concept-set-browser params="criteriaContext: criteriaContext, cohortConceptSets: selectedStudy().indexRule().ConceptSets, onActionComplete: onConceptSetSelectAction"></cohort-concept-set-browser>
+					</div>
+
 					<!-- ko if: isGeneratedOpen -->
 					<div title="Generated Sql..." data-bind="dialog: { isOpen: isGeneratedOpen, modal: true, width:700, height:500 }">
 						<div class="tabs" data-bind="tabs: { }">

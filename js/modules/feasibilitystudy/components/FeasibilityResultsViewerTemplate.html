@@ -23,7 +23,8 @@
 			<td data-bind="text: source.sourceKey"></td>
 			<td data-bind="text: source.sourceName"></td>
 			<td nowrap>
-				<generate-component-small params="{info: info().generationInfo, source: source, dirtyFlag: $parent.dirtyFlag}"></generate-component-small>
+				<!-- ko: ifnot: config.readOnly --><generate-component-small params="{info: info().generationInfo, source: source, dirtyFlag: $parent.dirtyFlag}"></generate-component-small> <!-- /ko -->
+				<!-- ko: if: config.readOnly -->READ-ONLY<!-- /ko -->
 			</td>
 			<!-- ko if: $data.info().generationInfo.status != "COMPLETE" -->
 			<td colspan="6" style="text-align: center">Not Available</td>
