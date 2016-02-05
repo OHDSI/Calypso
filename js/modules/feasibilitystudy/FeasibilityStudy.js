@@ -18,7 +18,7 @@ define(function (require, exports) {
 		self.indexRule = ko.observable(new CohortExpression(data.indexRule));
 		self.indexDescription = ko.observable(data.indexDescription || null);
 		self.inclusionRules = ko.observableArray(data.inclusionRules && data.inclusionRules.map(function (inclusionRule) {
-			return new InclusionRule(inclusionRule);
+			return new InclusionRule(inclusionRule,self.indexRule().ConceptSets);
 		}));
 	}
 	return FeasibilityStudy;

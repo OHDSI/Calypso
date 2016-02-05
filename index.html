@@ -134,7 +134,7 @@
 							</li>
 						</ul>
 						<div data-bind="attr: { id: 'indexRule' }">
-							<div class="tab_contents" data-bind="eventListener: [{ event: 'click', selector: '.addConceptSet', callback: addConceptSet}]" >
+							<div class="tab_contents" data-bind="eventListener: { event: 'click', selector: '.conceptset_selector', callback: selectConceptSet}" >
 								<!-- ko with: selectedStudy() -->						
 								<div>
 								Description:<br/>
@@ -147,7 +147,7 @@
 						<div data-bind="attr: { id: 'inclusionRules' }">
 							<div class="tab_contents" data-bind="eventListener: [
 																									 { event: 'click', selector: '.deleteInclusionRule', callback: deleteInclusionRule},
-																									 { event: 'click', selector: '.addConceptSet', callback: addConceptSet}]" >								
+																									 { event: 'click', selector: '.conceptset_selector', callback: selectConceptSet}]" >								
 								<table style="width: 100%">
 								<colgroup>
 									<col span="1" style="width: 300px;" />
@@ -231,7 +231,10 @@
 							</div>
 						</div>
 					</div>
-					
+					<div title="Select Concept Set..." data-bind="dialog: {isOpen: isSelectConceptSetOpen, modal: true, width:'80%', height:600}">
+						<cohort-concept-set-browser params="criteriaContext: criteriaContext, cohortConceptSets: selectedStudy().indexRule().ConceptSets, onActionComplete: onConceptSetSelectAction"></cohort-concept-set-browser>
+					</div>
+
 					<!-- ko if: isGeneratedOpen -->
 					<div title="Generated Sql..." data-bind="dialog: { isOpen: isGeneratedOpen, modal: true, width:700, height:500 }">
 						<div class="tabs" data-bind="tabs: { }">

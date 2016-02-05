@@ -17,7 +17,8 @@ define(['knockout',
 				'databindings/eventListenerBinding',
 				'databindings/ddSlickActionBinding',
 				'bindings/jqAutosizeBinding',
-				'knockout-jqueryui/tabs', 
+				'knockout-jqueryui/tabs',
+				'circe',
 				'css!styles/tabs.css',
 				'css!styles/buttons.css',
 			 ],
@@ -110,6 +111,8 @@ define(['knockout',
 			self.tabWidget = ko.observable();
 			self.indexRuleEditor = ko.observable();
 			self.conceptSetEditor = ko.observable();
+			self.criteriaContext = ko.observable();
+			self.isSelectConceptSetOpen = ko.observable(false);
 			self.sources = ko.observableArray();
 			self.filteredSources = ko.pureComputed(function () {
 				return self.sources().filter(function (source) {
@@ -144,7 +147,7 @@ define(['knockout',
 			
 			// model behaviors
 			self.addInclusionRule = function() {
-				var newInclusionRule = new InclusionRule();
+				var newInclusionRule = new InclusionRule(null, self.selectedStudy().indexRule().ConceptSets);
 				self.selectedStudy().inclusionRules.push(newInclusionRule);
 				self.selectInclusionRule(newInclusionRule);
 			}
@@ -155,11 +158,26 @@ define(['knockout',
 			}
 			
 			self.addConceptSet = function(item) {
-				self.tabWidget().tabs("option", "active", 2); // index 2 is the Concept Set Tab.
-				var fieldObservable = item.CodesetId;
 				var newConceptId = self.conceptSetEditor().createConceptSet().id;
-				fieldObservable(newConceptId);
+				self.criteriaContext().conceptSetId(newConceptId);
+				self.tabWidget().tabs("option", "active", 2); // index 2 is the Concept Set Tab.
 			}
+			
+			self.selectConceptSet = function(item) {
+				self.criteriaContext(item);
+				self.isSelectConceptSetOpen(true);
+			}
+			
+			self.onConceptSetSelectAction = function(result)
+			{
+				console.log(result);
+				self.isSelectConceptSetOpen(false);
+				
+				if (result.action=='add')
+					self.addConceptSet();
+				
+				self.criteriaContext(null);
+			}			
 			
 			self.selectStudy = function (studyTableItem) {
 				window.location.hash = '/' + studyTableItem.id; 
