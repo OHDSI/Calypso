@@ -31,7 +31,6 @@ requirejs.config({
 		"knockout": "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min",
 		"ko.sortable": "https://cdnjs.cloudflare.com/ajax/libs/knockout-sortable/0.11.0/knockout-sortable",
 		"director": "https://cdnjs.cloudflare.com/ajax/libs/Director/1.2.8/director.min",
-		"databindings/knockout.selectOnFocus": "https://cdn.rawgit.com/One-com/knockout-select-on-focus/v0.1.5/lib/knockout.selectOnFocus",
 		"datatables": "https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min",
 		// OHDSI components
 		"cohortbuilder": "/circe/js/modules/cohortbuilder",
