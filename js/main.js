@@ -39,7 +39,8 @@ requirejs.config({
 		"conceptsetbuilder": "/circe/js/modules/conceptsetbuilder",
 		"feasibilitystudy": "modules/feasibilitystudy",
 		"webapi" : "/circe/js/modules/WebAPIProvider",
-		
+		"facets": "/atlas/js/facets",
+		"faceted-datatable": "/atlas/js/components/faceted-datatable",
 		"vocabularyprovider": "/circe/js/modules/WebAPIProvider/VocabularyProvider",
 		// plugins
 		"text": "requirejs/plugins/text",
@@ -57,7 +58,9 @@ requirejs.config({
 			'jquery-ui/draggable' : 'jquery-ui',
 			'jquery-ui/dialog' : 'jquery-ui',
 			'jquery-ui/autocomplate': 'jquery-ui',
-			'jquery-ui/tabs': 'jquery-ui'
+			'jquery-ui/tabs': 'jquery-ui',
+			'knockout.dataTables.binding': 'databindings/datatableBinding',
+			'colvis': 'ColVis'
 		}
 	},
 	deps: ['jquery',
