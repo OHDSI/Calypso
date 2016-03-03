@@ -154,6 +154,13 @@ define(['knockout',
 				self.selectedStudy().inclusionRules.remove(inclusionRule);
 			}
 			
+			self.copyInclusionRule = function (inclusionRule) {
+				var copiedRule = new InclusionRule(ko.toJS(inclusionRule));
+				copiedRule.name("Copy of: " + copiedRule.name());
+				self.selectedStudy().inclusionRules.push(copiedRule);
+				self.selectedInclusionRule(copiedRule);
+			}			
+			
 			self.addConceptSet = function(item) {
 				self.tabWidget().tabs("option", "active", 2); // index 2 is the Concept Set Tab.
 				var fieldObservable = item.CodesetId;

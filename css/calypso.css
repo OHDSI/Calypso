@@ -69,6 +69,12 @@ button.deleteInclusionRule
 	margin-top:2px;
 }
 
+button.copyInclusionRule
+{
+	vertical-align: top;
+	margin-top:2px;
+}
+
 .selectedInclusion
 {
 	-webkit-transition: background .5s;
