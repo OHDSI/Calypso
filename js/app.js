@@ -157,6 +157,13 @@ define(['knockout',
 				self.selectedStudy().inclusionRules.remove(inclusionRule);
 			}
 			
+			self.copyInclusionRule = function (inclusionRule) {
+				var copiedRule = new InclusionRule(ko.toJS(inclusionRule));
+				copiedRule.name("Copy of: " + copiedRule.name());
+				self.selectedStudy().inclusionRules.push(copiedRule);
+				self.selectedInclusionRule(copiedRule);
+			}			
+			
 			self.addConceptSet = function(item) {
 				var newConceptId = self.conceptSetEditor().createConceptSet().id;
 				self.criteriaContext().conceptSetId(newConceptId);

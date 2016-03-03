@@ -147,6 +147,7 @@
 						</div>
 						<div data-bind="attr: { id: 'inclusionRules' }">
 							<div class="tab_contents" data-bind="eventListener: [
+																									 { event: 'click', selector: '.copyInclusionRule', callback: copyInclusionRule},
 																									 { event: 'click', selector: '.deleteInclusionRule', callback: deleteInclusionRule},
 																									 { event: 'click', selector: '.conceptset_selector', callback: selectConceptSet}]" >								
 								<table style="width: 100%">

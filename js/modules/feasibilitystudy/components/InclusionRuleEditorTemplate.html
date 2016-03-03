@@ -2,7 +2,9 @@
 <div>
 <textarea maxlength="250" rows="1"
 					style="font-size: 18px; width: 500px; resize: none; overflow: hidden; word-wrap: break-word;" 
-					class="inputField" data-bind="textInput: name, jqAutoresize: {append: ''}, css: { emptyInput: !(name() && (name().length > 0)) }"></textarea> <button class="deleteInclusionRule">Delete Rule</button>
+					class="inputField" data-bind="textInput: name, jqAutoresize: {append: ''}, css: { emptyInput: !(name() && (name().length > 0)) }"></textarea> 
+	<button class="button button-small button-flat-primary copyInclusionRule">Copy Rule</button>
+	<button class="button button-small button-flat-caution deleteInclusionRule">Delete Rule</button>
 </div>
 <div>
 Description:<br/>
